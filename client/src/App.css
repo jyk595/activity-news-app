@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,188 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+}
+
+/* Header Styles */
+
+header {
+  padding: 24px;
+  position: fixed;
+  width: 100%;
+  clear: both;
+}
+
+.left-nav {
+  float: left;
+}
+
+.nav-logo {
+  text-decoration: none;
+  color: #222;
+}
+
+.nav-item-container {
+  margin-top: 16px;
+}
+
+.nav-item {
+  display: block;
+  text-decoration: none;
+  color: #222;
+  margin-bottom: 4px;
+  font-size: 12px;
+  margin: 4px 0;
+}
+
+.profile-nav {
+  float: right;
+  width: 40px;
+  margin-right: 40px;
+}
+
+.header-hover {
+  width: 40px;
+  text-align: center;
+  margin-right: 8px;
+  /* display: none; */
+  transition: 0.5s;
+}
+
+.header-hover:hover {
+  display: inline-block;
+}
+
+h1 {
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+h2 {
+  margin-bottom: 4px;
+  /* padding-left: 19px; */
+  cursor: pointer;
+}
+
+/* Login Page Styles */
+
+form > * {
+  display: block;
+}
+
+/* Feed Page Styles */
+
+.feed-page-container {
+  height: 100vh;
+}
+
+.list-container {
+  padding: 24px 96px;
+  display: inline-block;
+  width: calc(50% - 192px);
+  float: left;
+  height: 100vh;
+  overflow: auto;
+}
+
+.list-header-container {
+  margin: 120px 0 16px;
+}
+
+.list-header {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  display: inline-block;
+  margin: 0;
+}
+
+.list-count {
+  font-size: 12px;
+  vertical-align: top;
+  margin-left: 8px;
+}
+
+.feed-section-container {
+  margin-bottom: 24px;
+  overflow: auto;
+}
+
+.feed-section-date {
+  font-size: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #222;
+}
+
+.article-container {
+  display: inline-block;
+  width: calc(50% - 1px);
+  border-left: 1px solid #efefef;
+  overflow: auto;
+  height: 100vh;
+}
+
+.feed-section-card h3 {
+  font-size: 12px;
+}
+
+.article-image-container img {
+  width: 100%;
+}
+
+.article-h1 {
+  font-family: "Times New Roman";
+  font-style: italic;
+  font-size: 24px;
+  margin: 16px 24px;
+}
+
+.article-p {
+  font-size: 12px;
+  letter-spacing: .25px;
+  margin: 8px 24px;
+}
+
+.controls-container {
+  margin: -64px 24px 0;
+  overflow: overlay;
+  float: right;
+}
+
+.controls-container button {
+  background: #0000ff;
+  color: white;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  height: 32px;
+  border-radius: 100px;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.controls-container button:last-child {
+  margin: 0;
+}
+
+.control-button-circle {
+  width: 32px;
+}
+
+.control-button-filled {
+  padding: 0 24px;
+}
+
+
+/* Footer Styles */
+
+footer {
+  display: block;
+  padding: 24px;
 }

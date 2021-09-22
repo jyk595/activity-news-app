@@ -1,25 +1,57 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
+
 import './App.css';
 
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
+import SignupPage from './Components/Pages/SignupPage';
+import Home from './Components/Pages/Home';
+import AboutPage from './Components/Pages/AboutPage';
+import ClipsPage from './Components/Pages/ClipsPage';
+import FeedPage from './Components/Pages/FeedPage';
+
 function App() {
+  const [user, setUser] = useState(true)
+
   return (
-    <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      <h1>Testing heroku push</h1>
-    </div>
+    <Router>
+      <Header 
+        user={user}
+      />
+      
+      <Switch>
+        <Route exact path="/login">
+          <SignupPage 
+            user = {user}
+          />
+        </Route>
+
+        <Route exact path="/about">
+          <AboutPage />
+        </Route>
+
+        <Route path="/:username/clips">
+          <ClipsPage 
+          />
+        </Route>
+        
+        <Route exact path="/:username">
+          <FeedPage 
+          />
+        </Route>
+
+        <Route exact path="/">
+          <Home />
+        </Route>
+      </Switch>
+
+      <Footer />
+    </Router>
   );
 }
 
