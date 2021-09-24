@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-function LoginForm() {
+function LoginForm({ setUser, openLoginDialog, setOpenLoginDialog, openSignupDialog, setOpenSignupDialog }) {
+  const history = useHistory();
+
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: ""
   });
-  const history = useHistory();
 
   function changeLoginForm(e) {
     setLoginFormData((loginFormData)=> ({
@@ -15,26 +16,44 @@ function LoginForm() {
     }))
   }
 
-  function submitLoginForm(e) {
+  async function submitLoginForm(e) {
     e.preventDefault();
 
-    fetch('/login', {
+    const response = await fetch('/login', {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(loginFormData)
-    })
-    .then(res=>res.json())
-    .then(userData=>{
-      // Set user data with Redux
-      history.push(`/${userData.username}`)
-    })
+    });
+
+    if (response.ok) {
+      response.json()
+      .then(data=> {
+        setUser(data)
+        history.push(`/${data.username}`)
+        setOpenLoginDialog(false)
+        setLoginFormData({
+          username: "",
+          password: ""
+        })
+      })
+    } else {
+      response.json()
+      .then(data => alert(data.errors))
+    }
+  }
+
+  function clickSwitchForm() {
+    setOpenLoginDialog(!openLoginDialog)
+    setOpenSignupDialog(!openSignupDialog)
   }
 
   return(
-    <form onSubmit={submitLoginForm}>
+    <form 
+      onSubmit={submitLoginForm}
+    >
       <label
-        for="username"
-        className="login-label"
+        htmlFor="username"
+        className="form-label"
       >
         Username
       </label>
@@ -42,13 +61,14 @@ function LoginForm() {
         type="text" 
         name="username"
         value={loginFormData.username}
-        className="login-input"
+        required
+        className="form-input"
         onChange={changeLoginForm}
       />
 
       <label
-        for="password"
-        className="login-label"
+        htmlFor="password"
+        className="form-label"
       >
         Password
       </label>
@@ -56,11 +76,23 @@ function LoginForm() {
         type="password" 
         name="password"
         value={loginFormData.password}
-        className="login-input"
+        required
+        className="form-input"
         onChange={changeLoginForm}
       />
 
-      <button>Login</button>
+      <button 
+        className="form-switch"
+        onClick={clickSwitchForm}
+      >
+        Don't have an account?
+      </button>
+
+      <button 
+        className="form-button"
+      >
+        Login
+      </button>
     </form>
   )
 }

@@ -50,8 +50,11 @@ end
 
 gem "active_model_serializers", "~> 0.10.12"
 
-# Scraper
+# Nokogiri Scraper
 source "https://rubygems.org"
 
 gem 'httparty'
 gem 'nokogiri'
+
+# Groupdate gem to group articles by day
+gem 'groupdate'

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function AddLinkForm() {
+function AddLinkForm({ user, setRenderedArticle, setArticleList }) {
   const [addLinkData, setAddLinkData] = useState({
     url: ""
   })
@@ -14,28 +14,33 @@ function AddLinkForm() {
   async function submitAddLink(e) {
     e.preventDefault()
 
-    const response = await fetch("add_link", {
+    const response = await fetch(`add_link/${user.id}`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(addLinkData)
     })
-    .then(res=>res.json())
-    .then(data=>console.log(data))
-  }
 
-  console.log(addLinkData)
+    if (response.ok) {
+      response.json()
+      .then(data=>{
+        setRenderedArticle(data)
+        setArticleList((articleList)=>([
+          data,
+          ...articleList
+        ]))
+      })
+    } else {
+      response.json()
+      .then(data=> alert(data.errors))
+    }
+  }
 
   return(
     <form
       onSubmit={submitAddLink}
     >
-      <label
-        for="url"
-      >
-
-      </label>
       <input 
         type="text"
         name="url"

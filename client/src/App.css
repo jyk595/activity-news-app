@@ -42,6 +42,10 @@ body {
   font-size: 14px;
 }
 
+h3 {
+  margin: 0;
+}
+
 /* Header Styles */
 
 header {
@@ -69,26 +73,62 @@ header {
   text-decoration: none;
   color: #222;
   margin-bottom: 4px;
-  font-size: 12px;
+  font-size: 14px;
   margin: 4px 0;
+  cursor: pointer;
+}
+
+.active-nav-item {
+  color: #0000ff
+}
+
+.profile-nav-container {
+  float: right;
 }
 
 .profile-nav {
-  float: right;
-  width: 40px;
-  margin-right: 40px;
+  width: 24px;
+  margin-right: 48px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.profile-nav-info {
+  padding: 24px 24px 16px;
+  background: white;
+  border: 1px solid #0000ff;
+  width: 100px;
+  border-radius: 10px;
+  margin: 8px 0 0 -128px;
+}
+
+.profile-nav-name {
+  
+}
+
+.profile-nav-info p {
+  margin: 0 0 8px;
+  cursor: pointer;
+}
+
+.profile-nav-info p:hover {
+  color:#0000ff;
+  transition: 0.25s;
+}
+
+.profile-nav-hide {
+  display: none;
 }
 
 .header-hover {
   width: 40px;
   text-align: center;
   margin-right: 8px;
-  /* display: none; */
-  transition: 0.5s;
+  transition: 0.3s;
 }
 
 .header-hover:hover {
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 h1 {
@@ -99,14 +139,100 @@ h1 {
 
 h2 {
   margin-bottom: 4px;
-  /* padding-left: 19px; */
   cursor: pointer;
 }
 
-/* Login Page Styles */
+/* Dialog Styles */
 
-form > * {
+.dialog-container {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(5px);
+}
+
+.dialog-form-container {
+  width: 75vw;
+  height: 70vh;
+  background: white;
+  padding: 40px;
+  margin: 10vh auto;
+  overflow: auto;
+  border-radius: 5px;
+}
+
+.dialog-section-container {
+  width: 50%;
+  float: left;
+}
+
+.dialog-header-container {
   display: block;
+  overflow: auto;
+}
+
+.dialog-header {
+  margin: 0 0 24px;
+  width: 300px;
+  display: inline-block;
+  float: left;
+}
+
+.dialog-x-button {
+  display: inline-block;
+  float: right;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.dialog-x {
+  margin: 4px 0;
+  width: 12px;
+}
+
+.form-label {
+  display: block;
+}
+
+.form-input {
+  display: block;
+  width: 100%;
+  margin-bottom: 24px;
+  border: none;
+  border-bottom: 1px solid #222;
+  height: 32px;
+  outline: none;
+}
+
+.form-switch {
+  border: none;
+  background: none;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.form-button {
+  display: block;
+  border: none;
+  background: #0000ff;
+  border-radius: 5px;
+  padding: 12px 40px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  cursor: pointer;
+}
+
+/* Homepage Styles */
+
+.home-container {
+  height: 70vh;
+  width: 100vw;
+  background: gold;
 }
 
 /* Feed Page Styles */
@@ -125,15 +251,15 @@ form > * {
 }
 
 .list-header-container {
-  margin: 120px 0 16px;
+  margin: 120px 0 24px;
 }
 
 .list-header {
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 600;
   letter-spacing: 3px;
   display: inline-block;
-  margin: 0;
+  margin: -8px 0 0;
 }
 
 .list-count {
@@ -162,8 +288,42 @@ form > * {
   height: 100vh;
 }
 
-.feed-section-card h3 {
+.article-card-preview {
+  height: 40x;
+  width: 40px;
+  object-fit: fill;
+  margin-right: 8px;
+  float: left;
+}
+
+.feed-section-card {
   font-size: 12px;
+  border: none;
+  background: none;
+  text-align: left;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+
+.feed-section-card:hover {
+  opacity: 0.75;
+  transition: 0.3s;
+}
+
+.article-card-arrow {
+  margin-left: 8px;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.feed-section-read {
+  color: #aaa;
+}
+
+.hide-article-card-arrow {
+  display: none;
 }
 
 .article-image-container img {
@@ -175,6 +335,8 @@ form > * {
   font-style: italic;
   font-size: 24px;
   margin: 16px 24px;
+  letter-spacing: -0.5px;
+  color: #222;
 }
 
 .article-p {
@@ -195,18 +357,24 @@ form > * {
   border: none;
   font-size: 14px;
   font-weight: 500;
-  height: 32px;
+  height: 36px;
   border-radius: 100px;
   cursor: pointer;
-  margin-right: 4px;
+  margin-right: 0px;
+  border: 4px solid white;
 }
 
 .controls-container button:last-child {
   margin: 0;
 }
 
+.controls-container button:hover {
+  transition: 0.3s;
+  background: rgba(0, 0, 255, 0.8)
+}
+
 .control-button-circle {
-  width: 32px;
+  width: 36px;
 }
 
 .control-button-filled {
