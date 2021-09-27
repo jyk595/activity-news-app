@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function AddLinkForm({ user, setRenderedArticle, setArticleList }) {
+function AddLinkForm({ user, setRenderedArticle, setArticleList, setAddLinkOpen }) {
   const [addLinkData, setAddLinkData] = useState({
     url: ""
   })
@@ -30,10 +30,14 @@ function AddLinkForm({ user, setRenderedArticle, setArticleList }) {
           data,
           ...articleList
         ]))
+        setAddLinkData({
+          url: ""
+        })
+        setAddLinkOpen(false)
       })
     } else {
       response.json()
-      .then(data=> alert(data.errors))
+      .then(data=> alert("Sorry, it looks like this article can't be added to your feed."))
     }
   }
 

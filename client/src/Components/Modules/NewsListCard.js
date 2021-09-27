@@ -1,5 +1,5 @@
-function NewsListCard({ article, renderedArticle, setRenderedArticle }) {
-  const { id, title, image_url, is_read } = article;
+function NewsListCard({ article, renderedArticle, setRenderedArticle, setReadState }) {
+  const { id, title, image_url } = article;
   
   async function clickArticleCard() {
     setRenderedArticle(article)
@@ -13,10 +13,12 @@ function NewsListCard({ article, renderedArticle, setRenderedArticle }) {
         is_read: true
       })
     })
+    
     if (response.ok) {
       response.json()
       .then((data)=>{
         article.is_read = data.is_read
+        setReadState(true)
       })
     }
   }

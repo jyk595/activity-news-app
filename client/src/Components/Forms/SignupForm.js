@@ -48,14 +48,7 @@ function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, se
           password: "",
           password_confirmation: ""
         })
-        // setArticleList([{
-        //   title: "Getting started with Activity!",
-        //   image_url: "https://pbs.twimg.com/profile_images/1210618202457292802/lt9KD2lt.jpg",
-        //   content: "Lorem ipsum",
-        //   link: "www.google.com",
-        //   is_read: true,
-        //   user_id: data.id
-        // }])
+
         fetch(`/conventional_add/${data.id}`,{
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -167,16 +160,16 @@ function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, se
         className="form-input"
         onChange={changeSignupForm}
       />
+      
+      <button className="form-button">
+        Create Account
+      </button>
 
       <button 
         className="form-switch"
         onClick={clickSwitchForm}
       >
         I already have an account
-      </button>
-
-      <button className="form-button">
-        Create Account
       </button>
     </form>
   )

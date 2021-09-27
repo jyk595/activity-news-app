@@ -9,20 +9,27 @@ class ArticlesController < ApplicationController
   def create
     url = params[:url]
     unparsed_page = HTTParty.get(url)
-    parsed_page = Nokogiri::HTML(unparsed_page)
-    
+    parsed_page = Nokogiri::HTML(unparsed_page.body)
+
     parsed_h1 = parsed_page.css('h1')
+    vetted_h1 = parsed_h1.present? ? parsed_h1.text : "Website cannot be scraped"
+
     parsed_img = parsed_page.css('img').attr('src')
+    vetted_img = parsed_img.present? ? parsed_img.text : "https://i.ibb.co/sw9FSz0/no-image.png"
+
     parsed_p = parsed_page.css('p')
+    vetted_p = parsed_p.present? ? parsed_p.text : "#{url} is not a site that can be scraped. If you'd like, you can edit the title and img to save."
+
     
     article = User.find(params[:user_id]).articles.create!({
-      "title" => parsed_h1.text,
-      "image_url" => parsed_img.text,
-      "content" => parsed_p.text,
+      "title" => vetted_h1,
+      "image_url" => vetted_img,
+      "content" => vetted_p,
       "link" => url,
-      "is_read" => true,
+      "is_read" => false,
       "created_at" => params[:created_at]
     })
+
     render json: article, status: :created
   end
 
@@ -39,15 +46,32 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    article = Article.find(params[:article_id])
+    article = find_article_by_id
     article.update(article_params)
     render json: article, status: :accepted
   end
 
+  def update_all_to_read
+    user = User.find(params[:user_id])
+    articles = user.articles.order("created_at DESC")
+    articles.map{|article| article.is_read = true}
+    render json: articles, status: :accepted
+  end
+
+  def destroy
+    article = find_article_by_id
+    article.destroy
+    head :no_content
+  end
+
   private
 
+  def find_article_by_id
+    Article.find(params[:article_id])
+  end
+
   def article_params
-    params.permit(:title, :image_url, :content, :link, :is_read)
+    params.permit(:title, :image_url, :content, :link, :is_read, :articles)
   end
 
 end

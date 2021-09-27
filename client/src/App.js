@@ -23,6 +23,7 @@ function App() {
     "is_read": true,
   });
   const [articleList, setArticleList] = useState(null);
+  const [openProfileExpand, setOpenProfileExpand] = useState(false);
 
   return (
     <Router>
@@ -31,24 +32,29 @@ function App() {
         setUser={setUser}
         setRenderedArticle={setRenderedArticle}
         setArticleList={setArticleList}
+        openProfileExpand={openProfileExpand}
+        setOpenProfileExpand={setOpenProfileExpand}
       />
 
-      <Switch>        
+      <Switch>
+        <Route exact path="/about">
+          <AboutPage />
+        </Route>
+
         {user &&
         <Route path="/:username">
           <UserRoute 
             user={user}
+            setUser={setUser}
             renderedArticle={renderedArticle}
             setRenderedArticle={setRenderedArticle}
             articleList={articleList}
             setArticleList={setArticleList}
+            openProfileExpand={openProfileExpand}
+            setOpenProfileExpand={setOpenProfileExpand}
           />
         </Route>
         }
-
-        <Route exact path="/about">
-          <AboutPage />
-        </Route>
 
         <Route exact path="/">
           <Home />

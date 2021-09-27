@@ -82,16 +82,16 @@ function LoginForm({ setUser, openLoginDialog, setOpenLoginDialog, openSignupDia
       />
 
       <button 
+        className="form-button"
+      >
+        Login
+      </button>
+
+      <button 
         className="form-switch"
         onClick={clickSwitchForm}
       >
         Don't have an account?
-      </button>
-
-      <button 
-        className="form-button"
-      >
-        Login
       </button>
     </form>
   )

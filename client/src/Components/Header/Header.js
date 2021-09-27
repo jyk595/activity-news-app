@@ -4,14 +4,14 @@ import { useState } from 'react';
 import AddLinkForm from '../Forms/AddLinkForm';
 import LoginDialog from '../Dialogs/LoginDialog';
 import SignupDialog from '../Dialogs/SignupDialog';
+import CloseX from '../../Images/times-solid.svg';
 
-function Header({ user, setUser, setRenderedArticle, setArticleList }) {
+function Header({ user, setUser, setRenderedArticle, setArticleList, openProfileExpand, setOpenProfileExpand }) {
   const history = useHistory();
 
   const [addLinkOpen, setAddLinkOpen] = useState(false);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const [openSignupDialog, setOpenSignupDialog] = useState(false);
-  const [openProfileInfo, setOpenProfileInfo] = useState(false);
 
   function toggleAddLinkOpen() {
     setAddLinkOpen(addLinkOpen=> !addLinkOpen)
@@ -25,17 +25,16 @@ function Header({ user, setUser, setRenderedArticle, setArticleList }) {
     setOpenSignupDialog(!openSignupDialog)
   };
 
+  function clickProfileExpand() {
+    setOpenProfileExpand(!openProfileExpand)
+  }
+  
   function clickLogout() {
     fetch('/logout', {
       method:'DELETE'
     })
     setUser(false);
-    setOpenProfileInfo(false);
     history.push('/');
-  };
-
-  function clickProfileInfo() {
-    setOpenProfileInfo(!openProfileInfo)
   };
 
   return(
@@ -77,8 +76,9 @@ function Header({ user, setUser, setRenderedArticle, setArticleList }) {
           className="nav-item-container"
         >
           <NavLink 
-            exact to="/:username"
+            exact to={`/${user.username}`}
             activestyle={{
+              fontWeight: "bold",
               color: "#0000ff"
             }}
             className="nav-item"
@@ -87,14 +87,14 @@ function Header({ user, setUser, setRenderedArticle, setArticleList }) {
             Feed
           </NavLink>
           <NavLink 
-            exact to="/:username/clips"
+            exact to={`/${user.username}/notes`}
             activestyle={{
               color: "#0000ff"
             }}
             className="nav-item"
           >
             <span className="header-hover">02</span>
-            Clips
+            Notes
           </NavLink>
           <p
             activestyle={{
@@ -104,13 +104,14 @@ function Header({ user, setUser, setRenderedArticle, setArticleList }) {
             onClick={toggleAddLinkOpen}
           >
             <span className="header-hover">03</span>
-            Add Articles
+            Add Article
           </p>
           {addLinkOpen &&
           <AddLinkForm 
             user={user}
             setRenderedArticle={setRenderedArticle}
             setArticleList={setArticleList}
+            setAddLinkOpen={setAddLinkOpen}
           /> }
           <NavLink 
             to="/about"
@@ -126,7 +127,7 @@ function Header({ user, setUser, setRenderedArticle, setArticleList }) {
             activestyle={{
               color: "#0000ff"
             }}
-            className={addLinkOpen? "nav-item active-nav-item" : "nav-item"}
+            className="nav-item"
             onClick={clickLogout}
           >
             <span className="header-hover">05</span>
@@ -162,16 +163,11 @@ function Header({ user, setUser, setRenderedArticle, setArticleList }) {
       {user &&
         <div className="profile-nav-container">
           <img 
-            src={user.profile_img} 
+            src={openProfileExpand ? CloseX : user.profile_img} 
             alt="nav profile pic" 
             className="profile-nav"
-            onClick={clickProfileInfo}
+            onClick={clickProfileExpand}
           />
-          <div className={openProfileInfo ? "profile-nav-info" : "profile-nav-hide"}>
-            <h3 className="profile-nav-name">{user.full_name}</h3>
-            <p>@{user.username}</p>
-            <p onClick={clickLogout}>Logout</p>
-          </div>
         </div>
       }
     </header>
