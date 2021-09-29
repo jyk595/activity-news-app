@@ -3,6 +3,7 @@ import { LineChart } from 'react-chartkick';
 import 'chartkick/chart.js';
 
 function NewsList({ user, articleList, setArticleList, renderedArticle, setRenderedArticle, setReadState }) {
+
   async function clickAllRead() {
     const response = await fetch(`/users/${user.id}/articles`,{
       method: "PATCH",

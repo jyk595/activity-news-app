@@ -37,7 +37,7 @@ function AddLinkForm({ user, setRenderedArticle, setArticleList, setAddLinkOpen 
       })
     } else {
       response.json()
-      .then(data=> alert("Sorry, it looks like this article can't be added to your feed."))
+      .then(data=> alert("Sorry, it looks like this article can't be added to your."))
     }
   }
 

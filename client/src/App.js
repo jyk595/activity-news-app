@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,10 +20,20 @@ function App() {
     "image_url": "https://pbs.twimg.com/profile_images/1210618202457292802/lt9KD2lt.jpg",
     "content": "Lorem ipsum",
     "link": "www.google.com",
-    "is_read": true,
+    "is_read": true
   });
   const [articleList, setArticleList] = useState(null);
   const [openProfileExpand, setOpenProfileExpand] = useState(false);
+
+  useEffect(()=>{
+    fetch('/me')
+    .then((r)=>{
+      if(r.ok) {
+        r.json()
+        .then((user) => setUser(user))
+      }
+    })
+  },[]);
 
   return (
     <Router>

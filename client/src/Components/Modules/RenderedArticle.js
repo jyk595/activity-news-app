@@ -78,7 +78,7 @@ function RenderedArticle({ renderedArticle, setArticleList, setRenderedArticle, 
             </a>
           </h1>
 
-          {notesList.map((note)=>{
+          {renderedArticle.notes.map((note)=>{
             return <p>{note.content}</p>
           })}
 

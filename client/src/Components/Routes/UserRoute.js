@@ -65,6 +65,8 @@ function UserRoute({ user, setUser, renderedArticle, setRenderedArticle, article
             setRenderedArticle={setRenderedArticle}
             readState={readState}
             setReadState={setReadState}
+            notesList={notesList}
+            setNotesList={setNotesList}
           />
         }
         </Route>
