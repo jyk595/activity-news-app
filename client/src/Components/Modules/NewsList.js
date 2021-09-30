@@ -1,5 +1,5 @@
 import NewsListCard from '../Modules/NewsListCard';
-import { LineChart } from 'react-chartkick';
+// import { LineChart } from 'react-chartkick';
 import 'chartkick/chart.js';
 
 function NewsList({ user, articleList, setArticleList, renderedArticle, setRenderedArticle, setReadState }) {

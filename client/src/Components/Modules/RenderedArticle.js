@@ -1,10 +1,20 @@
 import { useState } from 'react';
+import TextSelector from 'text-selection-react';
 
 import AddNoteDialog from '../Dialogs/AddNoteDialog';
 import ExportIcon from '../../Images/external-link-alt-solid.svg';
 
-function RenderedArticle({ renderedArticle, setArticleList, setRenderedArticle, readState, setReadState, notesList, setNotesList }) {
+function RenderedArticle({ renderedArticle, setArticleList, setRenderedArticle, readState, setReadState, notesList, setNotesList, tagList }) {
   const [openAddNote, setOpenAddNote] = useState(false);
+  const textSelectorTags = 
+    tagList.map((tag)=>{
+      return {
+        text: `${tag.name}`,
+        handler: (text) => {
+          handleNoteAdd(text, `${tag.name}`)
+        }
+      }
+    })
 
   function clickDeleteButton() {
     fetch(`/articles/${renderedArticle.id}`,{
@@ -36,13 +46,54 @@ function RenderedArticle({ renderedArticle, setArticleList, setRenderedArticle, 
     }
   }
 
+  async function handleNoteAdd(text, tagName) {
+    const noteForm = {
+      "content": text.innerHTML
+    }
+
+    const response = await fetch(`/articles/${renderedArticle.id}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(noteForm)
+    })
+    if (response.ok) {
+      response.json()
+      .then(data=>{
+        fetch(`/note_tags`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            "note_id": data.id,
+            "tag": tagName
+          })
+        })
+        
+        setRenderedArticle((renderedArticle)=>({
+          ...renderedArticle,
+          notes: [
+            ...renderedArticle.notes,
+            data
+          ]
+        }))
+
+        setNotesList((notesList)=>({
+          data,
+          ...notesList
+        }))
+      })
+    } else {
+      response.json()
+      .then(data=> alert("Your note couldn't be added."))
+    }
+  }
+
   function clickAddNote() {
     setOpenAddNote(true)
   }
-  
+    
   return(
     <>
-    {renderedArticle && notesList &&
+    {renderedArticle.notes && notesList &&
     <div>
       {openAddNote && <AddNoteDialog
         setOpenAddNote={setOpenAddNote}
@@ -50,6 +101,12 @@ function RenderedArticle({ renderedArticle, setArticleList, setRenderedArticle, 
         setRenderedArticle={setRenderedArticle}
         setNotesList={setNotesList}
       />}
+
+      <TextSelector
+        events={textSelectorTags}
+        // color={'yellow'}
+        colorText={false}
+      />
 
       <div className="article-container">
         <div className="article-image-container">
@@ -79,7 +136,12 @@ function RenderedArticle({ renderedArticle, setArticleList, setRenderedArticle, 
           </h1>
 
           {renderedArticle.notes.map((note)=>{
-            return <p>{note.content}</p>
+            return <p 
+              key={note.id}
+              className="article-note-item"
+            >
+              {note.content}
+            </p>
           })}
 
           <p className="article-p">{renderedArticle.content}</p>

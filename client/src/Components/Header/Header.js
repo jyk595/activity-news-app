@@ -1,17 +1,17 @@
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 
+import ConfirmLogoutDialog from '../Dialogs/ConfirmLogoutDialog';
 import AddLinkForm from '../Forms/AddLinkForm';
 import LoginDialog from '../Dialogs/LoginDialog';
 import SignupDialog from '../Dialogs/SignupDialog';
 import CloseX from '../../Images/times-solid.svg';
 
 function Header({ user, setUser, setRenderedArticle, setArticleList, openProfileExpand, setOpenProfileExpand }) {
-  const history = useHistory();
-
   const [addLinkOpen, setAddLinkOpen] = useState(false);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const [openSignupDialog, setOpenSignupDialog] = useState(false);
+  const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
 
   function toggleAddLinkOpen() {
     setAddLinkOpen(addLinkOpen=> !addLinkOpen)
@@ -28,17 +28,29 @@ function Header({ user, setUser, setRenderedArticle, setArticleList, openProfile
   function clickProfileExpand() {
     setOpenProfileExpand(!openProfileExpand)
   }
+
+  function clickLogoutExpand() {
+    setOpenLogoutDialog(!openLogoutDialog)
+  }
   
-  function clickLogout() {
-    fetch('/logout', {
-      method:'DELETE'
-    })
-    setUser(false);
-    history.push('/');
-  };
+  // function clickLogout() {
+  //   fetch('/logout', {
+  //     method:'DELETE'
+  //   })
+  //   setUser(false);
+  //   history.push('/');
+  // };
 
   return(
     <header>
+      {openLogoutDialog &&
+        <ConfirmLogoutDialog 
+          setUser={setUser}
+          openLogoutDialog={openLogoutDialog}
+          setOpenLogoutDialog={setOpenLogoutDialog}
+        />
+      }
+
       {openLoginDialog &&
         <LoginDialog 
           open={openLoginDialog}
@@ -113,24 +125,14 @@ function Header({ user, setUser, setRenderedArticle, setArticleList, openProfile
             setArticleList={setArticleList}
             setAddLinkOpen={setAddLinkOpen}
           /> }
-          <NavLink 
-            to="/about"
-            activestyle={{
-              color: "#0000ff"
-            }}
-            className="nav-item"
-          >
-            <span className="header-hover">04</span>
-            About
-          </NavLink>
           <p
             activestyle={{
               color: "#0000ff"
             }}
             className="nav-item"
-            onClick={clickLogout}
+            onClick={clickLogoutExpand}
           >
-            <span className="header-hover">05</span>
+            <span className="header-hover">04</span>
             Logout
           </p>
         </div>

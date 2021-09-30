@@ -382,6 +382,13 @@ header {
   margin-left: 16px;
 }
 
+.article-note-item {
+  margin: 8px 24px;
+  background: #f5f5f5;
+  padding: 16px;
+  border-radius: 10px;
+}
+
 .article-p {
   font-size: 12px;
   letter-spacing: .25px;
@@ -425,10 +432,27 @@ header {
   padding: 0 24px;
 }
 
+/* Notes Page Styles */
+.note-item-container {
+  padding: 16px;
+  background: #f5f5f5;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.note-item-content {
+  font-size: 18px;
+}
+
+.note-item-from {
+  color: #aaa;
+}
 
 /* Footer Styles */
 
 footer {
   display: block;
   padding: 24px;
+  background: #000;
 }

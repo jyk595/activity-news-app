@@ -24,7 +24,7 @@ function AddNoteDialog({ setOpenAddNote, renderedArticle, setRenderedArticle, se
 
     if (response.ok) {
       response.json()
-      .then(data=>{
+      .then(data=>{        
         setRenderedArticle((renderedArticle)=>({
           ...renderedArticle,
           notes: [

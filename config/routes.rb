@@ -21,6 +21,11 @@ Rails.application.routes.draw do
   get '/users/:user_id/notes', to: 'notes#show'
   post '/articles/:article_id', to: 'notes#create'
   
+  # Tags Controller
+  get '/tags', to: 'tags#index'
+
+  # Note Tags Controller
+  post '/note_tags', to: 'note_tags#create'
 
   # Routing logic: fallback requests for React Router.
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }

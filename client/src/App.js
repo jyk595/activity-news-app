@@ -10,7 +10,6 @@ import './App.css';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import Home from './Components/Pages/Home';
-import AboutPage from './Components/Pages/AboutPage';
 import UserRoute from './Components/Routes/UserRoute';
 
 function App() {
@@ -20,7 +19,7 @@ function App() {
     "image_url": "https://pbs.twimg.com/profile_images/1210618202457292802/lt9KD2lt.jpg",
     "content": "Lorem ipsum",
     "link": "www.google.com",
-    "is_read": true
+    "is_read": false
   });
   const [articleList, setArticleList] = useState(null);
   const [openProfileExpand, setOpenProfileExpand] = useState(false);
@@ -47,10 +46,6 @@ function App() {
       />
 
       <Switch>
-        <Route exact path="/about">
-          <AboutPage />
-        </Route>
-
         {user &&
         <Route path="/:username">
           <UserRoute 
