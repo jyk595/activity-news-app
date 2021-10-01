@@ -1,7 +1,7 @@
 import LoginForm from '../Forms/LoginForm';
 import CloseX from '../../Images/times-solid.svg';
 
-function LoginDialog({ openLoginDialog, setOpenLoginDialog, openSignupDialog, setOpenSignupDialog, setUser }) {
+function LoginDialog({ openLoginDialog, setOpenLoginDialog, openSignupDialog, setOpenSignupDialog }) {
   function clickCloseX() {
     setOpenLoginDialog(false)
   };
@@ -26,7 +26,6 @@ function LoginDialog({ openLoginDialog, setOpenLoginDialog, openSignupDialog, se
             </button>
           </div>
           <LoginForm 
-            setUser={setUser}
             openLoginDialog={openLoginDialog}
             setOpenLoginDialog={setOpenLoginDialog}
             openSignupDialog={openSignupDialog}

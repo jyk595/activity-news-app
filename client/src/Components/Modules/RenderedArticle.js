@@ -1,10 +1,18 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import TextSelector from 'text-selection-react';
 
 import AddNoteDialog from '../Dialogs/AddNoteDialog';
 import ExportIcon from '../../Images/external-link-alt-solid.svg';
+import { addNote, deleteArticle, getRenderedArticle } from '../../redux/actions';
 
-function RenderedArticle({ renderedArticle, setArticleList, setRenderedArticle, readState, setReadState, notesList, setNotesList, tagList }) {
+function RenderedArticle({ readState, setReadState }) {
+  const dispatch = useDispatch();
+  const tagList = useSelector((state)=>state.tagList);
+  const notesList = useSelector((state)=>state.notesList);
+  const renderedArticle = useSelector((state)=>state.renderedArticle);
+  const articleList = useSelector((state) => state.articleList);
+  
   const [openAddNote, setOpenAddNote] = useState(false);
   const textSelectorTags = 
     tagList.map((tag)=>{
@@ -17,14 +25,18 @@ function RenderedArticle({ renderedArticle, setArticleList, setRenderedArticle, 
     })
 
   function clickDeleteButton() {
-    fetch(`/articles/${renderedArticle.id}`,{
-      method: 'DELETE'
-    })
-    setArticleList((articleList)=>{
-      const filteredList = articleList.filter((article)=>article.id !== renderedArticle.id);
-      setRenderedArticle(filteredList[0]);
-      return filteredList
-    })
+    const filteredArr = articleList.filter((article)=>article.id !== renderedArticle.id)
+    
+    dispatch(deleteArticle(renderedArticle.id));
+    dispatch(getRenderedArticle(filteredArr[0]))
+    // fetch(`/articles/${renderedArticle.id}`,{
+    //   method: 'DELETE'
+    // })
+    // setArticleList((articleList)=>{
+    //   const filteredList = articleList.filter((article)=>article.id !== renderedArticle.id);
+    //   dispatch(getRenderedArticle(filteredList[0]))
+    //   return filteredList
+    // })
   }
 
   async function clickReadButton() {
@@ -46,45 +58,47 @@ function RenderedArticle({ renderedArticle, setArticleList, setRenderedArticle, 
     }
   }
 
-  async function handleNoteAdd(text, tagName) {
+  function handleNoteAdd(text, tagName) {
     const noteForm = {
       "content": text.innerHTML
     }
 
-    const response = await fetch(`/articles/${renderedArticle.id}`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(noteForm)
-    })
-    if (response.ok) {
-      response.json()
-      .then(data=>{
-        fetch(`/note_tags`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            "note_id": data.id,
-            "tag": tagName
-          })
-        })
-        
-        setRenderedArticle((renderedArticle)=>({
-          ...renderedArticle,
-          notes: [
-            ...renderedArticle.notes,
-            data
-          ]
-        }))
+    dispatch(addNote(renderedArticle.id, noteForm, tagName))
 
-        setNotesList((notesList)=>({
-          data,
-          ...notesList
-        }))
-      })
-    } else {
-      response.json()
-      .then(data=> alert("Your note couldn't be added."))
-    }
+    // const response = await fetch(`/articles/${renderedArticle.id}`, {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify(noteForm)
+    // })
+    // if (response.ok) {
+    //   response.json()
+    //   .then(data=>{
+    //     fetch(`/note_tags`, {
+    //       method: 'POST',
+    //       headers: {'Content-Type': 'application/json'},
+    //       body: JSON.stringify({
+    //         "note_id": data.id,
+    //         "tag": tagName
+    //       })
+    //     })
+        
+    //     setRenderedArticle((renderedArticle)=>({
+    //       ...renderedArticle,
+    //       notes: [
+    //         ...renderedArticle.notes,
+    //         data
+    //       ]
+    //     }))
+
+    //     setNotesList((notesList)=>({
+    //       data,
+    //       ...notesList
+    //     }))
+    //   })
+    // } else {
+    //   response.json()
+    //   .then(data=> alert("Your note couldn't be added."))
+    // }
   }
 
   function clickAddNote() {
@@ -93,13 +107,10 @@ function RenderedArticle({ renderedArticle, setArticleList, setRenderedArticle, 
     
   return(
     <>
-    {renderedArticle.notes && notesList &&
+    {renderedArticle.notes && notesList && tagList &&
     <div>
       {openAddNote && <AddNoteDialog
         setOpenAddNote={setOpenAddNote}
-        renderedArticle={renderedArticle}
-        setRenderedArticle={setRenderedArticle}
-        setNotesList={setNotesList}
       />}
 
       <TextSelector

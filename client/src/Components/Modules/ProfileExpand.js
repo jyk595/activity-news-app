@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import EditProfileForm from '../Forms/EditProfileForm';
+import { logoutUser } from '../../redux/actions';
 
-function ProfileExpand({ user, setUser, openProfileExpand, setOpenProfileExpand }) {
+function ProfileExpand() {
+  const user = useSelector((state)=>state.user);
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [openProfileEdit, setOpenProfileEdit] = useState(false);
@@ -13,10 +17,7 @@ function ProfileExpand({ user, setUser, openProfileExpand, setOpenProfileExpand 
   }
 
   function clickLogout() {
-    fetch('/logout', {
-      method:'DELETE'
-    })
-    setUser(false);
+    dispatch(logoutUser());
     history.push('/');
   };
   
@@ -24,8 +25,6 @@ function ProfileExpand({ user, setUser, openProfileExpand, setOpenProfileExpand 
     <div className="profile-expand-container">
       {openProfileEdit ?
       <EditProfileForm 
-        user={user}
-        setUser={setUser}
         openProfileEdit={openProfileEdit}
         setOpenProfileEdit={setOpenProfileEdit}
       /> :

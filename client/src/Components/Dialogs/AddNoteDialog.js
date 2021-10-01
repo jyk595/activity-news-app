@@ -1,11 +1,17 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CloseX from '../../Images/times-solid.svg';
+import { addNote } from '../../redux/actions';
 
-function AddNoteDialog({ setOpenAddNote, renderedArticle, setRenderedArticle, setNotesList }){
+function AddNoteDialog({ setOpenAddNote }){
+  const tagList = useSelector((state)=>state.tagList);
+  const renderedArticle = useSelector((state)=>state.renderedArticle);
+  const dispatch = useDispatch();
+  
   const [noteFormData, setNoteFormData] = useState({
     content: ""
-  })
+  });
 
   function onChangeNote(e) {
     setNoteFormData({
@@ -16,32 +22,8 @@ function AddNoteDialog({ setOpenAddNote, renderedArticle, setRenderedArticle, se
   async function submitNoteForm(e) {
     e.preventDefault()
 
-    const response=await fetch(`/articles/${renderedArticle.id}`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(noteFormData)
-    })
-
-    if (response.ok) {
-      response.json()
-      .then(data=>{        
-        setRenderedArticle((renderedArticle)=>({
-          ...renderedArticle,
-          notes: [
-            ...renderedArticle.notes,
-            data
-          ]
-        }))
-        setOpenAddNote(false)
-        setNotesList((notesList)=>({
-          data,
-          ...notesList
-        }))
-      })
-    } else {
-      response.json()
-      .then(data=> alert("Your note couldn't be added."))
-    }
+    dispatch(addNote(renderedArticle.id, noteFormData, e.target.name.tag))
+    setOpenAddNote(false)
   }
 
   function clickCloseX() {
@@ -51,9 +33,6 @@ function AddNoteDialog({ setOpenAddNote, renderedArticle, setRenderedArticle, se
   return(
     <div className="dialog-container">
       <div className="dialog-note-form-container">
-        {/* <div className="dialog-section-container">
-          hello
-        </div> */}
         <div className="dialog-section-container">
           <div className="dialog-header-container">
             <h2 className="dialog-header">Add a note</h2>
@@ -80,14 +59,21 @@ function AddNoteDialog({ setOpenAddNote, renderedArticle, setRenderedArticle, se
             <input
               type="submit"
             />
+
+            <select
+              name="selected_tag"
+            >
+              {tagList.map((tag)=>{
+                return <option
+                  key={tag.id}
+                  tag={tag.id}
+                  value={tag.id}
+                >
+                  {tag.name}
+                </option>
+              })}
+            </select>
           </form>
-          {/* <LoginForm 
-            setUser={setUser}
-            openLoginDialog={openLoginDialog}
-            setOpenLoginDialog={setOpenLoginDialog}
-            openSignupDialog={openSignupDialog}
-            setOpenSignupDialog={setOpenSignupDialog}
-          /> */}
         </div>
       </div>
     </div>

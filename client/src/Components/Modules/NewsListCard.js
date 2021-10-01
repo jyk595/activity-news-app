@@ -1,10 +1,16 @@
-function NewsListCard({ article, renderedArticle, setRenderedArticle, setReadState }) {
-  const { id, title, image_url } = article;
-  
-  async function clickArticleCard() {
-    setRenderedArticle(article)
+import { useSelector, useDispatch } from 'react-redux';
 
-    const response = await fetch(`/articles/${id}`,{
+import { getRenderedArticle } from '../../redux/actions';
+
+function NewsListCard({ article, setReadState }) {
+  const { id, title, image_url } = article;
+  const renderedArticle = useSelector((state) => state.renderedArticle);
+  const dispatch = useDispatch();
+  
+  function clickArticleCard() {
+    dispatch(getRenderedArticle(article));
+
+    const response = fetch(`/articles/${id}`,{
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json'

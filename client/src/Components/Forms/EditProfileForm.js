@@ -1,6 +1,12 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-function EditProfileForm({ user, setUser, openProfileEdit, setOpenProfileEdit }) {
+import { updateUser } from '../../redux/actions';
+
+function EditProfileForm({ openProfileEdit, setOpenProfileEdit }) {
+  const dispatch = useDispatch();
+  const user = useSelector((state)=>state.user);
+  
   const [editFormData, setEditFormData] = useState({
     username: user.username,
     full_name: user.full_name,
@@ -15,25 +21,10 @@ function EditProfileForm({ user, setUser, openProfileEdit, setOpenProfileEdit })
     }))
   }
 
-  async function submitEditProfile(e) {
-    e.preventDefault()
-
-    const response = await fetch(`/users/${user.id}`,{
-      method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(editFormData)
-    })
-
-    if (response.ok) {
-      response.json()
-      .then((data)=>{
-        setUser(data)
-        setOpenProfileEdit(false)
-      })
-    } else {
-      response.json()
-      .then(data=> alert(data.errors))
-    }
+  function submitEditProfile(e) {
+    e.preventDefault();
+    dispatch(updateUser(editFormData, user));
+    setOpenProfileEdit(false)
   }
   
   return(

@@ -1,24 +1,19 @@
 import NewsListCard from '../Modules/NewsListCard';
+import { useSelector, useDispatch } from 'react-redux';
 // import { LineChart } from 'react-chartkick';
 import 'chartkick/chart.js';
 
-function NewsList({ user, articleList, setArticleList, renderedArticle, setRenderedArticle, setReadState }) {
+import { markAllAsRead } from '../../redux/actions';
 
-  async function clickAllRead() {
-    const response = await fetch(`/users/${user.id}/articles`,{
-      method: "PATCH",
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    if (response.ok) {
-      response.json()
-      .then((data)=>{
-        renderedArticle.is_read = data.is_read
-        setReadState(true)
-        setArticleList(data)
-      })
-    }
+function NewsList({ setReadState }) {
+  const dispatch = useDispatch();
+  const user = useSelector((state)=>state.user);
+  const articleList = useSelector((state)=>state.articleList);
+  const renderedArticle = useSelector((state)=>state.renderedArticle);
+
+  function clickAllAsRead() {
+    dispatch(markAllAsRead(user.id));
+    setReadState(true);
   }
   
   return(
@@ -32,7 +27,7 @@ function NewsList({ user, articleList, setArticleList, renderedArticle, setRende
         
         <button 
           className="list-read-button"
-          onClick={clickAllRead}
+          onClick={clickAllAsRead}
         >
           Mark all as read
         </button>
@@ -43,8 +38,6 @@ function NewsList({ user, articleList, setArticleList, renderedArticle, setRende
           return <NewsListCard
             key={article.id}
             article={article}
-            renderedArticle={renderedArticle}
-            setRenderedArticle={setRenderedArticle}
             setReadState={setReadState}
           />
         })}

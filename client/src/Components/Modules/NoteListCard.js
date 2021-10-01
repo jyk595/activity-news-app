@@ -1,8 +1,14 @@
-function NoteListCard({ note, setRenderedArticle, articleList }) {
+import { useSelector, useDispatch } from 'react-redux';
+
+import { getRenderedArticle } from '../../redux/actions';
+
+function NoteListCard({ note }) {
+  const articleList = useSelector((state)=>state.articleList);
+  const dispatch = useDispatch();
 
   function clickNoteItem() {
     const article = articleList.find((item)=>item.id === note.article.id)
-    setRenderedArticle(article)
+    dispatch(getRenderedArticle(article))
   }
   
   return(
@@ -15,7 +21,6 @@ function NoteListCard({ note, setRenderedArticle, articleList }) {
         onClick={clickNoteItem}
       >
         From: {note.article.title}
-        Source
       </p>
 
     </div>
