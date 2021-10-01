@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import ConfirmLogoutDialog from '../Dialogs/ConfirmLogoutDialog';
 import AddLinkForm from '../Forms/AddLinkForm';
@@ -7,11 +8,12 @@ import LoginDialog from '../Dialogs/LoginDialog';
 import SignupDialog from '../Dialogs/SignupDialog';
 import CloseX from '../../Images/times-solid.svg';
 
-function Header({ user, setUser, setRenderedArticle, setArticleList, openProfileExpand, setOpenProfileExpand }) {
+function Header({ openProfileExpand, setOpenProfileExpand }) {
   const [addLinkOpen, setAddLinkOpen] = useState(false);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const [openSignupDialog, setOpenSignupDialog] = useState(false);
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
+  const user = useSelector ((state) => state.user);
 
   function toggleAddLinkOpen() {
     setAddLinkOpen(addLinkOpen=> !addLinkOpen)
@@ -32,21 +34,11 @@ function Header({ user, setUser, setRenderedArticle, setArticleList, openProfile
   function clickLogoutExpand() {
     setOpenLogoutDialog(!openLogoutDialog)
   }
-  
-  // function clickLogout() {
-  //   fetch('/logout', {
-  //     method:'DELETE'
-  //   })
-  //   setUser(false);
-  //   history.push('/');
-  // };
 
   return(
     <header>
       {openLogoutDialog &&
         <ConfirmLogoutDialog 
-          setUser={setUser}
-          openLogoutDialog={openLogoutDialog}
           setOpenLogoutDialog={setOpenLogoutDialog}
         />
       }
@@ -58,7 +50,6 @@ function Header({ user, setUser, setRenderedArticle, setArticleList, openProfile
           setOpenLoginDialog={setOpenLoginDialog}
           openSignupDialog={openSignupDialog}
           setOpenSignupDialog={setOpenSignupDialog}
-          setUser={setUser}
         />
       }
 
@@ -69,8 +60,6 @@ function Header({ user, setUser, setRenderedArticle, setArticleList, openProfile
           setOpenSignupDialog={setOpenSignupDialog}
           openLoginDialog={openLoginDialog}
           setOpenLoginDialog={setOpenLoginDialog}
-          setArticleList={setArticleList}
-          setUser={setUser}
         />
       }
 
@@ -120,9 +109,6 @@ function Header({ user, setUser, setRenderedArticle, setArticleList, openProfile
           </p>
           {addLinkOpen &&
           <AddLinkForm 
-            user={user}
-            setRenderedArticle={setRenderedArticle}
-            setArticleList={setArticleList}
             setAddLinkOpen={setAddLinkOpen}
           /> }
           <p

@@ -1,104 +1,56 @@
 import { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { 
   Switch,
   Route
 } from 'react-router-dom';
 
-// import NotesPage from '../Pages/NotesPage';
-// import FeedPage from '../Pages/FeedPage';
 import RenderedArticle from '../Modules/RenderedArticle';
 import NewsList from "../Modules/NewsList";
 import NotesList from "../Modules/NotesList";
 import ProfileExpand from "../Modules/ProfileExpand";
+import { getTags, getNotesList, getArticles } from '../../redux/actions';
 
-function UserRoute({ user, setUser, renderedArticle, setRenderedArticle, articleList, setArticleList, openProfileExpand, setOpenProfileExpand }) {
-  // const { username } = useParams();
-  const [notesList, setNotesList] = useState();
+function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
+  const dispatch = useDispatch();
+  const user = useSelector((state)=>state.user);
   const[readState,setReadState] = useState(false);
-  const [tagList, setTagList] = useState([]);
 
   useEffect(()=>{
-    fetch(`/users/${user.id}/articles`)
-    .then(res=>res.json())
-    .then(data=>{
-      setArticleList(data)
-      setRenderedArticle(data[0])
-    })
-  },[setArticleList, setRenderedArticle, user.id]);
+    dispatch(getArticles(user));
+  },[user]);
 
   useEffect(()=>{
-    fetch(`/users/${user.id}/notes`)
-    .then(res=>res.json())
-    .then(data=>{
-      setNotesList(data)
-    })
+    dispatch(getNotesList(`${user.id}`))
+    dispatch(getTags())
   },[user.id]);
-
-  useEffect(()=>{
-    fetch('/tags')
-    .then(res=>res.json())
-    .then((data)=>setTagList(data));
-  },[]);
 
   return(
     <>
       <Switch>
         <Route exact path="/:username/notes">
-          <NotesList 
-            user={user}
-            notesList={notesList}
-            setNotesList={setNotesList}
-            renderedArticle={renderedArticle}
-            setRenderedArticle={setRenderedArticle}
-            articleList={articleList}
-            tagList={tagList}
-          />
+          <NotesList />
+          
           {openProfileExpand ? 
-          <ProfileExpand 
-            user={user}
-            setUser={setUser}
-            openProfileExpand={openProfileExpand}
-            setOpenProfileExpand={setOpenProfileExpand}
-          /> :
+          <ProfileExpand /> 
+          :
           <RenderedArticle 
-            renderedArticle={renderedArticle}
-            setArticleList={setArticleList}
-            setRenderedArticle={setRenderedArticle}
             readState={readState}
             setReadState={setReadState}
-            notesList={notesList}
-            setNotesList={setNotesList}
-            tagList={tagList}
           />
           }
         </Route>
         <Route exact path="/:username">
           <NewsList 
-            user={user}
-            articleList={articleList} 
-            setArticleList={setArticleList}
-            renderedArticle={renderedArticle}
-            setRenderedArticle={setRenderedArticle}
             setReadState={setReadState}
           />
           {openProfileExpand ?
-          <ProfileExpand 
-            user={user}
-            setUser={setUser}
-            openProfileExpand={openProfileExpand}
-            setOpenProfileExpand={setOpenProfileExpand}
-          /> :
+          <ProfileExpand /> 
+          :
           <RenderedArticle 
-            renderedArticle={renderedArticle}
-            setArticleList={setArticleList}
-            setRenderedArticle={setRenderedArticle}
             readState={readState}
             setReadState={setReadState}
-            notesList={notesList}
-            setNotesList={setNotesList}
-            tagList={tagList}
           />
           }
         </Route> 

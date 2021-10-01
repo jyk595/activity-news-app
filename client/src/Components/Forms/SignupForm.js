@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, setOpenLoginDialog, setArticleList, setUser }) {
+import { createUser } from '../../redux/actions';
+
+function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, setOpenLoginDialog }) {
+  const dispatch = useDispatch();
   const history = useHistory();
   
   const [signupFormData, setSignupFormData] = useState({
@@ -25,46 +29,20 @@ function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, se
     setOpenLoginDialog(!openLoginDialog)
   }
 
-  async function submitSignupForm(e) {
+  function submitSignupForm(e) {
     e.preventDefault();
 
-    const response = await fetch('/signup',{
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(signupFormData)
+    dispatch(createUser(signupFormData));
+    history.push(`/${signupFormData.username}`)
+    setOpenSignupDialog(false)
+    setSignupFormData({
+      username: "",
+      full_name: "",
+      email: "",
+      profile_img: "",
+      password: "",
+      password_confirmation: ""
     })
-
-    if (response.ok) {
-      response.json()
-      .then(data=>{
-        setUser(data)
-        history.push(`/${data.username}`)
-        setOpenSignupDialog(false)
-        setSignupFormData({
-          username: "",
-          full_name: "",
-          email: "",
-          profile_img: "",
-          password: "",
-          password_confirmation: ""
-        })
-
-        fetch(`/conventional_add/${data.id}`,{
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            title: "Getting started with Activity!",
-            image_url: "https://pbs.twimg.com/profile_images/1210618202457292802/lt9KD2lt.jpg",
-            content: "Lorem ipsum",
-            link: "www.google.com",
-            is_read: true
-          })
-        })
-      })
-    } else {
-      response.json()
-      .then(data => alert(data.errors))
-    }
   }
   
   return(

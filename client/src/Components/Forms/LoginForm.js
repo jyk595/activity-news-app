@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-function LoginForm({ setUser, openLoginDialog, setOpenLoginDialog, openSignupDialog, setOpenSignupDialog }) {
+import { loginUser } from '../../redux/actions';
+
+function LoginForm({ openLoginDialog, setOpenLoginDialog, openSignupDialog, setOpenSignupDialog }) {
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [loginFormData, setLoginFormData] = useState({
@@ -16,30 +20,16 @@ function LoginForm({ setUser, openLoginDialog, setOpenLoginDialog, openSignupDia
     }))
   }
 
-  async function submitLoginForm(e) {
+  function submitLoginForm(e) {
     e.preventDefault();
 
-    const response = await fetch('/login', {
-      method: "POST",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(loginFormData)
-    });
-
-    if (response.ok) {
-      response.json()
-      .then(data=> {
-        setUser(data)
-        history.push(`/${data.username}`)
-        setOpenLoginDialog(false)
-        setLoginFormData({
-          username: "",
-          password: ""
-        })
-      })
-    } else {
-      response.json()
-      .then(data => alert(data.errors))
-    }
+    dispatch(loginUser(loginFormData))
+    history.push(`/${loginFormData.username}`)
+    setOpenLoginDialog(false)
+    setLoginFormData({
+      username: "",
+      password: ""
+    })
   }
 
   function clickSwitchForm() {

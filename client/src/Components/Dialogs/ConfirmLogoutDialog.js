@@ -1,8 +1,11 @@
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import CloseX from '../../Images/times-solid.svg';
+import { logoutUser } from '../../redux/actions';
 
-function ConfirmLogoutDialog({ setUser, openLogoutDialog, setOpenLogoutDialog}) {
+function ConfirmLogoutDialog({ setOpenLogoutDialog}) {
+  const dispatch = useDispatch();
   const history = useHistory();
 
   function clickCloseX() {
@@ -10,12 +13,9 @@ function ConfirmLogoutDialog({ setUser, openLogoutDialog, setOpenLogoutDialog}) 
   }
 
   function clickLogout() {
-    fetch('/logout', {
-      method:'DELETE'
-    })
-    setUser(false);
-    history.push('/');
+    dispatch(logoutUser());
     setOpenLogoutDialog(false);
+    history.push('/');
   };
   
   return(
@@ -38,7 +38,7 @@ function ConfirmLogoutDialog({ setUser, openLogoutDialog, setOpenLogoutDialog}) 
             <button
               onClick={clickLogout}
             >
-              Yes, log out
+              Yes, log me out
             </button>
             
             <button>Never mind</button>

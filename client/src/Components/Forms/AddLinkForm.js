@@ -1,6 +1,11 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-function AddLinkForm({ user, setRenderedArticle, setArticleList, setAddLinkOpen }) {
+import { addArticle } from '../../redux/actions';
+
+function AddLinkForm({ setAddLinkOpen }) {
+  const dispatch = useDispatch();
+  const user = useSelector((state)=>state.user);
   const [addLinkData, setAddLinkData] = useState({
     url: ""
   })
@@ -11,34 +16,13 @@ function AddLinkForm({ user, setRenderedArticle, setArticleList, setAddLinkOpen 
     })
   }
 
-  async function submitAddLink(e) {
-    e.preventDefault()
-
-    const response = await fetch(`add_link/${user.id}`, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(addLinkData)
-    })
-
-    if (response.ok) {
-      response.json()
-      .then(data=>{
-        setRenderedArticle(data)
-        setArticleList((articleList)=>([
-          data,
-          ...articleList
-        ]))
-        setAddLinkData({
-          url: ""
-        })
-        setAddLinkOpen(false)
-      })
-    } else {
-      response.json()
-      .then(data=> alert("Sorry, it looks like this article can't be added to your."))
-    }
+  function submitAddLink(e) {
+    e.preventDefault();
+    dispatch(addArticle(addLinkData, user));
+    setAddLinkData({
+      url: ""
+    });
+    setAddLinkOpen(false);
   }
 
   return(

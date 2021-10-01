@@ -1,8 +1,14 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import NoteListCard from './NoteListCard';
 
-function NotesList({ user, notesList, setNotesList, renderedArticle, setRenderedArticle, articleList, tagList }) {
+function NotesList() {
+  const tagList = useSelector((state) => state.tagList);
+  const notesList = useSelector((state) => state.notesList);
+  const articleList = useSelector((state) => state.articleList);
+  const renderedArticle = useSelector((state) => state.renderedArticle);
+  
   const [filteredNotesList, setFilteredNotesList] = useState(notesList);
 
   function clickTag(e) {
@@ -16,7 +22,7 @@ function NotesList({ user, notesList, setNotesList, renderedArticle, setRendered
 
   return(
     <>
-      {notesList && tagList && renderedArticle && articleList &&
+      {notesList && tagList && renderedArticle && articleList && filteredNotesList &&
       <div className="list-container">
         <div className="list-header-container">
           <h1 className="list-header">Notes</h1>
@@ -43,8 +49,6 @@ function NotesList({ user, notesList, setNotesList, renderedArticle, setRendered
           return <NoteListCard
             key={note.id}
             note={note}
-            setRenderedArticle={setRenderedArticle}
-            articleList={articleList}
           />
         })}
       </div>

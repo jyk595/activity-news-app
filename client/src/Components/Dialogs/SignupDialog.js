@@ -1,7 +1,7 @@
 import SignupForm from '../Forms/SignupForm';
 import CloseX from '../../Images/times-solid.svg';
 
-function SignupDialog({ openSignupDialog, setOpenSignupDialog, openLoginDialog, setOpenLoginDialog, setArticleList, setUser }) {
+function SignupDialog({ openSignupDialog, setOpenSignupDialog, openLoginDialog, setOpenLoginDialog }) {
   function clickCloseX() {
     setOpenSignupDialog(!openSignupDialog)
   };
@@ -30,8 +30,6 @@ function SignupDialog({ openSignupDialog, setOpenSignupDialog, openLoginDialog, 
             setOpenSignupDialog={setOpenSignupDialog}
             openLoginDialog={openLoginDialog}
             setOpenLoginDialog={setOpenLoginDialog}
-            setArticleList={setArticleList}
-            setUser={setUser}
           />
         </div>
       </div>
