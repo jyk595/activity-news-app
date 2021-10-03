@@ -10,24 +10,24 @@ import RenderedArticle from '../Modules/RenderedArticle';
 import NewsList from "../Modules/NewsList";
 import NotesList from "../Modules/NotesList";
 import ProfileExpand from "../Modules/ProfileExpand";
-import { getTags, getNotesList, getArticles } from '../../redux/actions';
+import { getTags, getNotesList, getArticles, getRenderedArticle } from '../../redux/actions';
 
 function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
   const dispatch = useDispatch();
   const user = useSelector((state)=>state.user);
+  const notesList = useSelector((state) => state.notesList);
+  const articleList = useSelector((state) => state.articleList);
   const[readState,setReadState] = useState(false);
 
   useEffect(()=>{
     dispatch(getArticles(user));
-  },[user]);
-
-  useEffect(()=>{
-    dispatch(getNotesList(`${user.id}`))
-    dispatch(getTags())
-  },[user.id]);
+    dispatch(getTags());
+    dispatch(getNotesList(user.id))
+  },[dispatch, user, notesList]);
 
   return(
     <>
+      {notesList && articleList &&
       <Switch>
         <Route exact path="/:username/notes">
           <NotesList />
@@ -41,6 +41,7 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
           />
           }
         </Route>
+        
         <Route exact path="/:username">
           <NewsList 
             setReadState={setReadState}
@@ -55,6 +56,7 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
           }
         </Route> 
       </Switch>
+      }
     </>
   )
 }

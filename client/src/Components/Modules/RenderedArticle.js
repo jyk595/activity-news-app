@@ -12,7 +12,6 @@ function RenderedArticle({ readState, setReadState }) {
   const notesList = useSelector((state)=>state.notesList);
   const renderedArticle = useSelector((state)=>state.renderedArticle);
   const articleList = useSelector((state) => state.articleList);
-  
   const [openAddNote, setOpenAddNote] = useState(false);
   const textSelectorTags = 
     tagList.map((tag)=>{
@@ -23,20 +22,11 @@ function RenderedArticle({ readState, setReadState }) {
         }
       }
     })
-
-  function clickDeleteButton() {
-    const filteredArr = articleList.filter((article)=>article.id !== renderedArticle.id)
+  const filteredArr = articleList.filter((article)=>article.id !== renderedArticle.id)
     
+  function clickDeleteButton() {
     dispatch(deleteArticle(renderedArticle.id));
     dispatch(getRenderedArticle(filteredArr[0]))
-    // fetch(`/articles/${renderedArticle.id}`,{
-    //   method: 'DELETE'
-    // })
-    // setArticleList((articleList)=>{
-    //   const filteredList = articleList.filter((article)=>article.id !== renderedArticle.id);
-    //   dispatch(getRenderedArticle(filteredList[0]))
-    //   return filteredList
-    // })
   }
 
   async function clickReadButton() {
@@ -64,50 +54,15 @@ function RenderedArticle({ readState, setReadState }) {
     }
 
     dispatch(addNote(renderedArticle.id, noteForm, tagName))
-
-    // const response = await fetch(`/articles/${renderedArticle.id}`, {
-    //   method: 'POST',
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: JSON.stringify(noteForm)
-    // })
-    // if (response.ok) {
-    //   response.json()
-    //   .then(data=>{
-    //     fetch(`/note_tags`, {
-    //       method: 'POST',
-    //       headers: {'Content-Type': 'application/json'},
-    //       body: JSON.stringify({
-    //         "note_id": data.id,
-    //         "tag": tagName
-    //       })
-    //     })
-        
-    //     setRenderedArticle((renderedArticle)=>({
-    //       ...renderedArticle,
-    //       notes: [
-    //         ...renderedArticle.notes,
-    //         data
-    //       ]
-    //     }))
-
-    //     setNotesList((notesList)=>({
-    //       data,
-    //       ...notesList
-    //     }))
-    //   })
-    // } else {
-    //   response.json()
-    //   .then(data=> alert("Your note couldn't be added."))
-    // }
   }
 
   function clickAddNote() {
     setOpenAddNote(true)
-  }
-    
+  } 
+      
   return(
     <>
-    {renderedArticle.notes && notesList && tagList &&
+    {articleList && renderedArticle.notes && notesList && tagList &&
     <div>
       {openAddNote && <AddNoteDialog
         setOpenAddNote={setOpenAddNote}

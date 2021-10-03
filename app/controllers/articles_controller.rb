@@ -18,13 +18,15 @@ class ArticlesController < ApplicationController
     vetted_img = parsed_img.present? ? parsed_img.text : "https://i.ibb.co/sw9FSz0/no-image.png"
 
     parsed_p = parsed_page.css('p')
-    vetted_p = parsed_p.present? ? parsed_p.text : "#{url} is not a site that can be scraped. If you'd like, you can edit the title and img to save."
+    combined_content=[]
+    vetted_p = parsed_p.present? ? parsed_p.each{|p| 
+      combined_content << {content: p.text}
+    } : "#{url} is not a site that can be scraped. If you'd like, you can edit the title and img to save."
 
-    
     article = User.find(params[:user_id]).articles.create!({
       "title" => vetted_h1,
       "image_url" => vetted_img,
-      "content" => vetted_p,
+      "content" => combined_content,
       "link" => url,
       "is_read" => false,
       "created_at" => params[:created_at]

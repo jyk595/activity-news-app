@@ -1,64 +1,53 @@
 // user Actions
 export function getUser() {
-  return(dispatch, getState)=>{
+  return(dispatch)=>{
     fetch('/me')
     .then((r)=>{
       if(r.ok) {
         r.json()
-        .then((data) => {
-          dispatch({ type: "LOGIN", payload: data })
-        })
+        .then((data) => dispatch({ type: "LOGIN", payload: data }))
       }
     })
   }
 }
 
 export function loginUser(loginFormData) {
-  return(dispatch, getState)=>{
-    const response = fetch('/login', {
+  return(dispatch)=>{
+    fetch('/login', {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(loginFormData)
-    });
-  
-    if (response.ok) {
-      response.json()
-      .then(data=> {
-        dispatch({ type: "LOGIN", payload: data })
-      })
-    } 
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      dispatch({ type: "LOGIN", payload: data })
+    })
   }
 }
 
 export function createUser(signupFormData) {
-  return(dispatch, getState)=>{
-    const response = fetch('/signup',{
+  return(dispatch)=>{
+    fetch('/signup',{
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(signupFormData)
     })
+    .then(res=>res.json())
+    .then(data=>{
+      dispatch({ type: "LOGIN", payload: data })
 
-    if (response.ok) {
-      response.json()
-      .then(data=>{
-        dispatch({ type: "LOGIN", payload: data })
-
-        fetch(`/conventional_add/${data.id}`,{
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            title: "Getting started with Activity!",
-            image_url: "https://pbs.twimg.com/profile_images/1210618202457292802/lt9KD2lt.jpg",
-            content: "Lorem ipsum",
-            link: "www.google.com",
-            is_read: true
-          })
+      fetch(`/conventional_add/${data.id}`,{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          title: "Getting started with Activity!",
+          image_url: "https://pbs.twimg.com/profile_images/1210618202457292802/lt9KD2lt.jpg",
+          content: "Lorem ipsum",
+          link: "www.google.com",
+          is_read: true
         })
       })
-    } else {
-      response.json()
-      .then(data => alert(data.errors))
-    }
+    })
   }
 }
 
@@ -93,7 +82,7 @@ export function logoutUser() {
 
 // renderedArticle Actions
 export function getRenderedArticle(article_data) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: "GET_RENDERED_ARTICLE", payload: article_data })
   }
 }
@@ -127,42 +116,34 @@ export function deleteArticle(article_id) {
 
 export function addArticle(addLinkData, user) {
   return(dispatch, getState)=>{
-    const response = fetch(`add_link/${user.id}`, {
+    fetch(`add_link/${user.id}`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(addLinkData)
     })
-
-    if (response.ok) {
-      response.json()
-      .then(data=>{
-        dispatch({ type:"GET_RENDERED_ARTICLE", payload: data})
-        dispatch({ type:"ADD_ARTICLE_TO_ARTICLE_LIST", payload: data})
-      })
-    } else {
-      response.json()
-      .then(data=> alert("Sorry, it looks like this article can't be added to your."))
-    }
+    .then(res=>res.json())
+    .then(data=>{
+      dispatch({ type:"GET_RENDERED_ARTICLE", payload: data})
+      dispatch({ type:"ADD_ARTICLE_TO_ARTICLE_LIST", payload: data})
+    })
   }
 }
 
 export function markAllAsRead(user_id) {
   return(dispatch, getState)=>{
-    const response = fetch(`/users/${user_id}/articles`,{
+    fetch(`/users/${user_id}/articles`,{
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json'
       }
     })
-    if (response.ok) {
-      response.json()
-      .then((data)=>{
-        dispatch({ type: "MARK_RENDERE_ARTICLE_AS_READ"})
-        dispatch({ type: "GET_ARTICLE_LIST", payload: data})
-      })
-    }
+    .then(res=>res.json())
+    .then(data=>{
+      dispatch({ type: "MARK_RENDERED_ARTICLE_AS_READ"})
+      dispatch({ type: "GET_ARTICLE_LIST", payload: data})
+    })
   }
 }
 
@@ -200,32 +181,28 @@ export function getNotesList(user_id) {
 }
 
 export function addNote(renderedArticleId, newForm, tagName) {
-  return(dispatch, getState) => {
-    const response = fetch(`/articles/${renderedArticleId}`, {
+  return(dispatch) => {
+    fetch(`/articles/${renderedArticleId}`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(newForm)
     })
-
-    if (response.ok) {
-      response.json()
-      .then(data=>{
-        fetch(`/note_tags`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            "note_id": data.id,
-            "tag": tagName
-          })
+    .then(res=>res.json())
+    .then(data=>{
+      fetch(`/note_tags`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          "note_id": data.id,
+          "tag": tagName
         })
-
+      })
+      .then(res=>res.json())
+      .then(moreData=>{
         dispatch({ type: "ADD_NOTES_LIST", payload: data})
         dispatch({ type: "ADD_NOTE_RENDERED_ARTICLE", payload: data})
       })
-    } else {
-      response.json()
-      .then(data=> alert("Your note couldn't be added."))
-    }
+    })
   }
 }
 

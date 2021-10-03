@@ -1,6 +1,7 @@
 import { compose, createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers/index";
 import thunk from "redux-thunk";
+// import axios from 'axios';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const composeMiddleware = applyMiddleware(thunk)

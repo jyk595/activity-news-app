@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import ConfirmLogoutDialog from '../Dialogs/ConfirmLogoutDialog';
 import AddLinkForm from '../Forms/AddLinkForm';
