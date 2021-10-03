@@ -20,13 +20,13 @@ export function renderedArticleReducer (state= initialRenderedArticle, action) {
         ]
       }
     }
-    case "MARK_AS_READ": {
+    case "MARK_RENDERED_ARTICLE_AS_READ": {
       return {
         ...state,
         is_read: true
       }
     }
     default:
-      return state
+      return state;
   }
 };

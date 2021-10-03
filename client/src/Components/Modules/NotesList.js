@@ -8,7 +8,7 @@ function NotesList() {
   const notesList = useSelector((state) => state.notesList);
   const articleList = useSelector((state) => state.articleList);
   const renderedArticle = useSelector((state) => state.renderedArticle);
-  
+
   const [filteredNotesList, setFilteredNotesList] = useState(notesList);
 
   function clickTag(e) {

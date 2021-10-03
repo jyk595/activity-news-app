@@ -9,8 +9,7 @@ function NewsList({ setReadState }) {
   const dispatch = useDispatch();
   const user = useSelector((state)=>state.user);
   const articleList = useSelector((state)=>state.articleList);
-  const renderedArticle = useSelector((state)=>state.renderedArticle);
-
+  
   function clickAllAsRead() {
     dispatch(markAllAsRead(user.id));
     setReadState(true);
