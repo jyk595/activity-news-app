@@ -12,7 +12,7 @@ function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, se
     username: "",
     full_name: "",
     email: "",
-    profile_img: "",
+    profile_img: "https://www.notion.so/cdn-cgi/image/w=1920,q=100/https://images.ctfassets.net/spoqsaf9291f/4VoLQQc5KlDoeYiI0pXNtP/7105562284ff8c47cba35accded51723/Scott_Stephens.png",
     password: "",
     password_confirmation: ""
   });
@@ -39,7 +39,7 @@ function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, se
       username: "",
       full_name: "",
       email: "",
-      profile_img: "",
+      profile_img: "https://www.notion.so/cdn-cgi/image/w=1920,q=100/https://images.ctfassets.net/spoqsaf9291f/4VoLQQc5KlDoeYiI0pXNtP/7105562284ff8c47cba35accded51723/Scott_Stephens.png",
       password: "",
       password_confirmation: ""
     })
@@ -94,7 +94,7 @@ function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, se
         onChange={changeSignupForm}
       />
 
-      <label
+      {/* <label
         htmlFor="profile_img"
         className="form-label"
       >
@@ -107,7 +107,7 @@ function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, se
         required
         className="form-input"
         onChange={changeSignupForm}
-      />
+      /> */}
       
       <label
         htmlFor="password"

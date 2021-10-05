@@ -1,5 +1,5 @@
 import SignupForm from '../Forms/SignupForm';
-import CloseX from '../../Images/times-solid.svg';
+import CloseX from '../../Images/times-solid.png';
 
 function SignupDialog({ openSignupDialog, setOpenSignupDialog, openLoginDialog, setOpenLoginDialog }) {
   function clickCloseX() {
@@ -9,10 +9,7 @@ function SignupDialog({ openSignupDialog, setOpenSignupDialog, openLoginDialog, 
   return(
     <div className="dialog-container">
       <div className="dialog-form-container">
-        <div className="dialog-section-container">
-          hello
-        </div>
-        <div className="dialog-section-container">
+        <div className="create-dialog-section-container">
           <div className="dialog-header-container">
             <h2 className="dialog-header">Create an account</h2>
             <button 

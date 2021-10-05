@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import CloseX from '../../Images/times-solid.svg';
+import CloseX from '../../Images/times-solid.png';
 import { logoutUser } from '../../redux/actions';
 
 function ConfirmLogoutDialog({ setOpenLogoutDialog}) {
@@ -24,6 +24,21 @@ function ConfirmLogoutDialog({ setOpenLogoutDialog}) {
         <div className="dialog-section-container">
           <div className="dialog-header-container">
             <h2 className="dialog-header">Are you sure you want to logout?</h2>
+            <button
+              className="dialog-button"
+              onClick={clickLogout}
+            >
+              Yes, log me out
+            </button>
+            <button
+              className="dialog-button"
+              onClick={clickCloseX}
+            >
+              Never mind
+            </button>
+          </div>
+
+          <div>
             
             <button 
               className="dialog-x-button"
@@ -34,22 +49,7 @@ function ConfirmLogoutDialog({ setOpenLogoutDialog}) {
                 alt="close x"
               />
             </button>
-            
-            <button
-              onClick={clickLogout}
-            >
-              Yes, log me out
-            </button>
-            
-            <button>Never mind</button>
-          </div>
-          {/* <LoginForm 
-            setUser={setUser}
-            openLoginDialog={openLoginDialog}
-            setOpenLoginDialog={setOpenLoginDialog}
-            openSignupDialog={openSignupDialog}
-            setOpenSignupDialog={setOpenSignupDialog}
-          /> */}
+            </div>
         </div>
       </div>
     </div>

@@ -6,12 +6,12 @@ import ConfirmLogoutDialog from '../Dialogs/ConfirmLogoutDialog';
 import AddLinkForm from '../Forms/AddLinkForm';
 import LoginDialog from '../Dialogs/LoginDialog';
 import SignupDialog from '../Dialogs/SignupDialog';
-import CloseX from '../../Images/times-solid.svg';
+import CloseX from '../../Images/times-solid.png';
+import LogoGif from '../../Images/activitynewslogo.gif';
 
-function Header({ openProfileExpand, setOpenProfileExpand }) {
+function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, setOpenSignupDialog }) {
   const [addLinkOpen, setAddLinkOpen] = useState(false);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
-  const [openSignupDialog, setOpenSignupDialog] = useState(false);
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
   const user = useSelector ((state) => state.user);
 
@@ -64,18 +64,30 @@ function Header({ openProfileExpand, setOpenProfileExpand }) {
       }
 
       <div className="left-nav">
+        <img 
+          src={LogoGif} 
+          alt="logo gif"
+          className="nav-logo-gif"
+        />
         <NavLink 
           to="/"
           className="nav-logo"
         >
-          <span className="header-hover">◆</span>
-          ACTIVITY.NEWS
+          <span className="logo-span">Activity.</span>
+          <span className="logo-span">News</span>
         </NavLink>
 
         {user ?
         <div
           className="nav-item-container"
         >
+          <div className="nav-main-container">
+          <img 
+            src={openProfileExpand ? CloseX : user.profile_img} 
+            alt="nav profile pic" 
+            className="profile-nav"
+            onClick={clickProfileExpand}
+          />
           <NavLink 
             exact to={`/${user.username}`}
             activestyle={{
@@ -107,10 +119,6 @@ function Header({ openProfileExpand, setOpenProfileExpand }) {
             <span className="header-hover">03</span>
             Add Article
           </p>
-          {addLinkOpen &&
-          <AddLinkForm 
-            setAddLinkOpen={setAddLinkOpen}
-          /> }
           <p
             activestyle={{
               color: "#0000ff"
@@ -121,6 +129,7 @@ function Header({ openProfileExpand, setOpenProfileExpand }) {
             <span className="header-hover">04</span>
             Logout
           </p>
+          </div>
         </div>
         : 
         <div
@@ -142,22 +151,17 @@ function Header({ openProfileExpand, setOpenProfileExpand }) {
             className="nav-item"
             onClick={clickSignupDialog}
           >
-            Create an account
+            Signup for free
           </p>
         </div>
         }
       </div>
-      
-      {user &&
-        <div className="profile-nav-container">
-          <img 
-            src={openProfileExpand ? CloseX : user.profile_img} 
-            alt="nav profile pic" 
-            className="profile-nav"
-            onClick={clickProfileExpand}
-          />
-        </div>
-      }
+
+      {addLinkOpen && <div className="header-add-article-container">
+        <AddLinkForm 
+          setAddLinkOpen={setAddLinkOpen}
+        /> 
+      </div>}
     </header>
   )
 }

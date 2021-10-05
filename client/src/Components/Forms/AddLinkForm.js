@@ -36,7 +36,7 @@ function AddLinkForm({ setAddLinkOpen }) {
         placeholder="Place URL here"
         onChange={onFormChange}
       />
-      <button>+</button>
+      <button>Add Link</button>
     </form>
   )
 }

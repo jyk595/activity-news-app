@@ -18,6 +18,8 @@ function App() {
   const dispatch = useDispatch();
   const user = useSelector ((state) => state.user);
   const [openProfileExpand, setOpenProfileExpand] = useState(false);
+  const [openSignupDialog, setOpenSignupDialog] = useState(false);
+
 
   useEffect(()=>{
     dispatch(getUser())
@@ -28,6 +30,8 @@ function App() {
       <Header 
         openProfileExpand={openProfileExpand}
         setOpenProfileExpand={setOpenProfileExpand}
+        openSignupDialog={openSignupDialog}
+        setOpenSignupDialog={setOpenSignupDialog}
       />
 
       <Switch>
@@ -41,7 +45,9 @@ function App() {
         }
 
         <Route exact path="/">
-          <Home />
+          <Home 
+            setOpenSignupDialog={setOpenSignupDialog}
+          />
         </Route>
       </Switch>
 
