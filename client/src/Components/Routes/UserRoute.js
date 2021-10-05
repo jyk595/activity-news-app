@@ -9,7 +9,7 @@ import {
 import RenderedArticle from '../Modules/RenderedArticle';
 import NewsList from "../Modules/NewsList";
 import NotesList from "../Modules/NotesList";
-import ProfileExpand from "../Modules/ProfileExpand";
+import ProfileEditDialog from '../Dialogs/ProfileEditDialog';
 import LogoGif from "../../Images/activitynewslogo.gif";
 import { getTags, getNotesList, getArticles, getRenderedArticle } from '../../redux/actions';
 
@@ -31,30 +31,37 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
       {notesList && articleList ?
       <Switch>
         <Route exact path="/:username/notes">
+          {openProfileExpand &&
+            <ProfileEditDialog 
+              open={openProfileExpand}
+              setOpenProfileExpand={setOpenProfileExpand}
+            />
+          }
+          
           <NotesList />
           
-          {openProfileExpand ? 
-          <ProfileExpand /> 
-          :
           <RenderedArticle 
             readState={readState}
             setReadState={setReadState}
           />
-          }
         </Route>
         
         <Route exact path="/:username">
+           {openProfileExpand &&
+            <ProfileEditDialog 
+              open={openProfileExpand}
+              setOpenProfileExpand={setOpenProfileExpand}
+            />
+          }
+          
           <NewsList 
             setReadState={setReadState}
           />
-          {openProfileExpand ?
-          <ProfileExpand /> 
-          :
+
           <RenderedArticle 
             readState={readState}
             setReadState={setReadState}
           />
-          }
         </Route> 
       </Switch>
       :

@@ -23,6 +23,7 @@ function ConfirmLogoutDialog({ setOpenLogoutDialog}) {
       <div className="dialog-form-container">
         <div className="dialog-section-container">
           <div className="dialog-header-container">
+            <h2 className="dialog-header">👋</h2>
             <h2 className="dialog-header">Are you sure you want to logout?</h2>
             <button
               className="dialog-button"

@@ -32,6 +32,10 @@ function Home({ setOpenSignupDialog}) {
           src="https://deathtostock.imgix.net/000/005/239/original/DTS_Fanette-Guilloud_Internet_22.jpg?w=429&h=537&fit=clip&dpr=1&auto=compress&q=75&ixlib=js-2.3.1&s=815d85b0bb6b0e6f764b8ba249f2e7fd"
           alt="orange coils"
         />
+        <img
+          src="https://deathtostock.imgix.net/000/002/205/original/Death_to_Stock_Tactile_1.jpg?w=342&h=513&fit=clip&dpr=2&auto=compress&q=75&ixlib=js-2.3.1&s=c6ffbe3c74ce64bb9c805360f5d95459"
+          alt="white linen sheets"
+        />
 
         <div className="home-explanation-container">
           <img 
