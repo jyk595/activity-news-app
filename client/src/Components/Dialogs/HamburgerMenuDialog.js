@@ -22,10 +22,6 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
     setOpenSignupDialog(true)
   }
 
-  function clickFeedFromMenu() {
-    setOpenHamburgerDialog(false)
-  }
-
   function clickLogoutFromMenu() {
     setOpenHamburgerDialog(false)
     setOpenLogoutDialog(true)
@@ -62,7 +58,6 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
                 <MailchimpSubscribe 
                   url={url}
                 />
-                <p className="mailchimp-fine-print">By signing up for our newsletter, you hereby agree to our <a href="www.notion.so">privacy policy</a>.</p>
               </div>
             </div>
             :
@@ -77,7 +72,7 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
               <NavLink 
                 exact to={`/${user.username}`}
                 className="dialog-hamburger-menu-items"
-                onClick={clickFeedFromMenu}
+                onClick={clickCloseX}
               >
                 <span className="header-hover">02</span>
                 Feed
@@ -85,6 +80,7 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
               <NavLink 
                 exact to={`/${user.username}/notes`}
                 className="dialog-hamburger-menu-items"
+                onClick={clickCloseX}
               >
                 <span className="header-hover">03</span>
                 Notes
@@ -101,7 +97,6 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
                 <MailchimpSubscribe 
                   url={url}
                 />
-                <p className="mailchimp-fine-print">By signing up for our newsletter, you hereby agree to our <a href="www.notion.so">privacy policy</a>.</p>
               </div>
             </div>
             }

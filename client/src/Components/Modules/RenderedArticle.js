@@ -24,6 +24,7 @@ function RenderedArticle({ readState, setReadState }) {
     })
   const filteredArr = articleList.filter((article)=>article.id !== renderedArticle.id)
     
+  console.log(renderedArticle)
   function clickDeleteButton() {
     dispatch(deleteArticle(renderedArticle.id));
     dispatch(getRenderedArticle(filteredArr[0]))
@@ -47,8 +48,6 @@ function RenderedArticle({ readState, setReadState }) {
       })
     }
   }
-
-  console.log(renderedArticle)
 
   const parsedArticleContent = renderedArticle.content.split("TKTK")
 
@@ -138,7 +137,7 @@ function RenderedArticle({ readState, setReadState }) {
           <p className="article-p">
             {parsedArticleContent.map((splitContent)=>{
               return <p
-                key={splitContent}
+                key={splitContent.id}
               >
                 {splitContent}</p>
             })}

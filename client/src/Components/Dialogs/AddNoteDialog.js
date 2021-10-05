@@ -49,19 +49,19 @@ function AddNoteDialog({ setOpenAddNote }){
           <form
             onSubmit={submitNoteForm}
           >
-            <label>Your note</label>
+            <label className="form-label">Your note</label>
             <input 
               type="text"
               name="content"
               value={noteFormData.content}
+              required
+              className="form-input"
               onChange={onChangeNote}
-            />
-            <input
-              type="submit"
             />
 
             <select
               name="selected_tag"
+              className="tags-dropdown"
             >
               {tagList.map((tag)=>{
                 return <option
@@ -73,6 +73,11 @@ function AddNoteDialog({ setOpenAddNote }){
                 </option>
               })}
             </select>
+
+            <input
+              type="submit"
+              className="dialog-button"
+            />
           </form>
         </div>
       </div>
