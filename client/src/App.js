@@ -12,7 +12,6 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import Home from './Components/Pages/Home';
 import UserRoute from './Components/Routes/UserRoute';
-import ProfileEditDialog from './Components/Dialogs/ProfileEditDialog';
 import { getUser } from './redux/actions/index';
 
 function App() {

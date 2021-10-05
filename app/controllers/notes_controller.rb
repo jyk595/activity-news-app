@@ -12,6 +12,12 @@ class NotesController < ApplicationController
     render json: note, status: :created
   end
 
+  def destroy
+    note = Note.find(params[:note_id])
+    note.destroy
+    head :no_content
+  end
+
   private
 
   def note_params

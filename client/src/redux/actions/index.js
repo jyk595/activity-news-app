@@ -176,6 +176,32 @@ export function addNote(renderedArticleId, newForm, tagName) {
   }
 }
 
+export function filterNotesList(userId, tagName) {
+  return(dispatch) => {
+    fetch(`/users/${userId}/notes`)
+    .then(res=>res.json())
+    .then(data=>{
+      // dispatch({ type: "GET_NOTES_LIST", payload: data})
+      // dispatch({ type:"FILTER_NOTES_LIST", payload: data})
+      console.log(data)
+      console.log(data[0].tags[0].id)
+      console.log(tagName)
+      const filteredData = data.filter((article)=> `${article.tags[0].id}` === `${tagName}`)
+      console.log(filteredData)
+      dispatch({ type: "GET_NOTES_LIST", payload: filteredData})
+    })
+  }
+}
+
+export function deleteNote(noteId) {
+  return(dispatch) => {
+    fetch(`/notes/${noteId}`,{
+      method: "DELETE"
+    })
+    dispatch({ type: "DELETE_FROM_NOTES_LIST", payload: noteId})
+  }
+}
+
 // tagList Actions
 export function getTags() {
   return(dispatch, getState)=>{

@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import NoteListCard from './NoteListCard';
+import { getNotesList, filterNotesList } from '../../redux/actions';
 
 function NotesList() {
+  const dispatch = useDispatch();
+  const user = useSelector((state)=>state.user);
   const tagList = useSelector((state) => state.tagList);
   const notesList = useSelector((state) => state.notesList);
   const articleList = useSelector((state) => state.articleList);
@@ -12,17 +15,16 @@ function NotesList() {
   const [filteredNotesList, setFilteredNotesList] = useState(notesList);
 
   function clickTag(e) {
-    if (e.target.value === "All" || e.target.value === ""){
-      setFilteredNotesList(notesList)
+    if (e.target.value === "All" || e.target.value === "") {
+      dispatch(getNotesList(user.id))
     } else {
-      const filteredList = notesList.filter((note)=>note.tags.map((tag)=>tag.id).toString() === e.target.value)
-      setFilteredNotesList(filteredList)
+      dispatch(filterNotesList(user.id, e.target.value))
     }
   }
 
   return(
     <>
-      {notesList && tagList && renderedArticle && articleList && filteredNotesList &&
+      {notesList && tagList && articleList &&
       <div className="list-container">
         <div className="list-header-container">
           <h1 className="list-header">Notes</h1>
@@ -45,7 +47,7 @@ function NotesList() {
           })}
         </select>
 
-        {filteredNotesList.map((note)=>{
+        {notesList.map((note)=>{
           return <NoteListCard
             key={note.id}
             note={note}
