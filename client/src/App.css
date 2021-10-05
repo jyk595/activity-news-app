@@ -100,6 +100,11 @@ header {
   color: #0000ff
 }
 
+.hamburger-menu-container {
+  display: none;
+  transition: 1s;
+}
+
 .profile-nav {
   width: 24px;
   height: 24px;
@@ -150,20 +155,43 @@ header {
 /* Profile Expand Styles */
 
 .profile-expand-container {
-  background: white;
   height: 120vh;
-  width: calc(50% - 49px);
-  border-left: 1px solid #efefef;
+  width: calc(66vw - 145px);
+  border-left: 1px solid #222;
   padding: 24px;
   float: left;
 }
 
 .profile-expand-img {
-  width: 160px;
-  height: 160px;
+  width: 100px;
+  height: 100px;
   border-radius: 100%;
   margin-bottom: 24px;
   object-fit: cover;
+  display: inline-block;
+  float: left;
+  margin-right: 20px;
+}
+
+.profile-expand-form-container {
+  float: left;
+  width: calc(100% - 120px);
+}
+
+.profile-expand-label {
+  font-family: "Heebo", sans-serif;
+}
+
+.profile-expand-form-container input {
+  display: block;
+  width: 100%;
+  margin-bottom: 24px;
+  border: none;
+  border-bottom: 1px solid #222;
+  height: 32px;
+  outline: none;
+  background: transparent;
+  font-family: "Heebo", sans-serif;
 }
 
 .profile-expand-secondary {
@@ -219,9 +247,15 @@ header {
   margin: 0 auto;
 }
 
+.edit-profile-dialog-section-container {
+  width: 50%;
+  margin: 0 auto;
+}
+
 .dialog-header-container {
   display: block;
   overflow: auto;
+  margin-bottom: 24px;
 }
 
 .dialog-header {
@@ -232,6 +266,7 @@ header {
   display: inline-block;
   float: left;
   color: #222;
+  width: 100%;
 }
 
 .dialog-x-button {
@@ -257,7 +292,7 @@ header {
   color: white;
   font-family: "Heebo", sans-serif;
   font-weight: 800;
-  border-radius: 50px;
+  border-radius: 5px;
   cursor: pointer;
   transition: 0.5s;
 }
@@ -576,6 +611,7 @@ header {
   border-radius: 5px;
   width: 100%;
   padding: 8px 16px;
+  background: #f5f5f5;
 }
 
 .note-item-content {
@@ -669,8 +705,81 @@ footer {
   body {
     padding: 16px;
   }
+  
+  /* Header Styles */
+  .nav-item-container {
+    display: none;
+  }
+
+  .hamburger-menu-container {
+    display: inline-block;
+    float: right;
+    width: 24px;
+    display: block;
+  }
+
+  .hamburger-menu-container img {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  /* Dialog Styles */
+
+  .dialog-hamburger-menu-items {
+    font-family: "Heebo", sans-serif;
+    font-size: 40px;
+    display: block;
+    margin-top: 16px;
+    text-decoration: none;
+    color: #222;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 120%;
+  }
+
+  .dialog-hamburger-menu-items .header-hover {
+    font-size: 16px;
+    vertical-align: super;
+    margin-right: 20px;
+  }
+
+  .dialog-hamburger-menu-container .mailchimp-container {
+    position: absolute;
+    bottom: 64px;
+    width: calc(100% - 80px);
+    background: rgba(255,255,255,0.6);
+    border-radius: 10px;
+    padding: 32px 24px 18px;
+  }
+
+  .dialog-hamburger-menu-container .mailchimp-container input {
+    width: 100%;
+  }
+
+  .dialog-x-button {
+    top: 32px;
+    right: 16px;
+  }
+  
+  .edit-profile-dialog-section-container, .create-dialog-section-container {
+    width: 100%;
+    margin: 10vh 0 0;
+  }
+
+  .profile-expand-img {
+    float: none;
+  }
+
+  .profile-expand-form-container {
+    float: none;
+    width: 100%
+  }
 
   /* Homepage Styles */
+  .left-nav {
+    float: none;
+  }
+  
   .left-home-container {
     width: 100%;
     height: auto;
@@ -683,6 +792,7 @@ footer {
 
   .home-explanation-container {
     padding: 40px 0;
+    width: 75%;
   }
 
   .home-explanation-header {
@@ -695,9 +805,8 @@ footer {
   }
 
   .left-home-container img, .right-home-container img {
-    width: 44vw;
+    width: 46vw;
     height: 140px;
-    padding: 1vw;
     object-fit: cover;
   }
 
@@ -715,9 +824,7 @@ footer {
     margin: 0 auto;
     padding: 0;
     height: auto;
-    opacity: 0;
-  transform: translateX(-100px);
-  transition: all 500ms ease-in-out;
+    width: calc(100vw - 32px);
   }
 
   .dialog-section-container {
@@ -732,6 +839,8 @@ footer {
 
   .dialog-header {
     font-size: 32px;
+    display: block;
+    margin-bottom: 24px;
   }
 
   /* Feed Page Styles */
@@ -766,6 +875,11 @@ footer {
 
   .controls-container {
     position: relative;
+  }
+
+  .article-h1 {
+    font-size: 28px;
+    line-height: 28px;
   }
 
   /* Footer Styles */

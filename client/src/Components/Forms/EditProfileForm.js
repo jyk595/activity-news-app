@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { updateUser } from '../../redux/actions';
 
-function EditProfileForm({ openProfileEdit, setOpenProfileEdit }) {
+function EditProfileForm({ setOpenProfileExpand }) {
   const dispatch = useDispatch();
   const user = useSelector((state)=>state.user);
   
@@ -24,72 +24,78 @@ function EditProfileForm({ openProfileEdit, setOpenProfileEdit }) {
   function submitEditProfile(e) {
     e.preventDefault();
     dispatch(updateUser(editFormData, user));
-    setOpenProfileEdit(false)
+    setOpenProfileExpand(false);
   }
   
   return(
     <div onSubmit={submitEditProfile}>
       <img 
-          src={user.profile_img}
-          alt="nav profile pic" 
-          className="profile-expand-img"
+        src={user.profile_img}
+        alt="nav profile pic" 
+        className="profile-expand-img"
+      />
+      <form
+        className="profile-expand-form-container"
+      >
+        <label
+          htmlFor="full_name"
+          className="profile-expand-label"
+        >
+          Full Name
+        </label>
+        <input 
+          name="full_name"
+          value={editFormData.full_name}
+          className="profile-expand-input"
+          onChange={changeForm}
         />
-        <form>
-          <label
-            htmlFor="full_name"
-            className="profile-expand-label"
-          >
-            Full Name
-          </label>
-          <input 
-            name="full_name"
-            value={editFormData.full_name}
-            className="profile-expand-input"
-            onChange={changeForm}
-          />
 
-          <label
-            htmlFor="username"
-            className="profile-expand-label"
-          >
-            Username
-          </label>
-          <input 
-            name="username"
-            value={editFormData.username}
-            className="profile-expand-input"
-            onChange={changeForm}
-          />
+        <label
+          htmlFor="username"
+          className="profile-expand-label"
+        >
+          Username
+        </label>
+        <input 
+          name="username"
+          value={editFormData.username}
+          className="profile-expand-input"
+          onChange={changeForm}
+        />
 
-          <label
-            htmlFor="profile_img"
-            className="profile-expand-label"
-          >
-            Profile Image
-          </label>
-          <input 
-            name="profile_img"
-            value={editFormData.profile_img}
-            className="profile-expand-input"
-            onChange={changeForm}
-          />
+        <label
+          htmlFor="profile_img"
+          className="profile-expand-label"
+        >
+          Profile Image
+        </label>
+        <input 
+          name="profile_img"
+          value={editFormData.profile_img}
+          className="profile-expand-input"
+          onChange={changeForm}
+        />
 
-          <label
-            htmlFor="email"
-            className="profile-expand-label"
-          >
-            Email
-          </label>
-          <input 
-            name="email"
-            value={editFormData.email}
-            className="profile-expand-input"
-            onChange={changeForm}
-          />
+        <label
+          htmlFor="email"
+          className="profile-expand-label"
+        >
+          Email
+        </label>
+        <input 
+          name="email"
+          value={editFormData.email}
+          className="profile-expand-input"
+          onChange={changeForm}
+        />
 
-          <button>Save Profile</button>
-          
-        </form>
+        <button
+          className="dialog-button"
+        >
+          Save Profile
+        </button>
+        
+      </form>
     </div>
   )
 }

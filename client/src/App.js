@@ -5,13 +5,14 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-
 import './App.css';
+import FadeIn from 'react-fade-in';
 
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import Home from './Components/Pages/Home';
 import UserRoute from './Components/Routes/UserRoute';
+import ProfileEditDialog from './Components/Dialogs/ProfileEditDialog';
 import { getUser } from './redux/actions/index';
 
 function App() {
@@ -33,15 +34,13 @@ function App() {
         openSignupDialog={openSignupDialog}
         setOpenSignupDialog={setOpenSignupDialog}
       />
-
+      <FadeIn>
       <Switch>
         {user &&
-        <Route path="/:username">
-          <UserRoute 
-            openProfileExpand={openProfileExpand}
-            setOpenProfileExpand={setOpenProfileExpand}
-          />
-        </Route>
+          <Route path="/:username">
+            <UserRoute 
+            />
+          </Route>
         }
 
         <Route exact path="/">
@@ -50,6 +49,7 @@ function App() {
           />
         </Route>
       </Switch>
+      </FadeIn>
 
       <Footer />
     </Router>

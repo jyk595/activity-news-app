@@ -6,13 +6,15 @@ import ConfirmLogoutDialog from '../Dialogs/ConfirmLogoutDialog';
 import AddLinkForm from '../Forms/AddLinkForm';
 import LoginDialog from '../Dialogs/LoginDialog';
 import SignupDialog from '../Dialogs/SignupDialog';
-import CloseX from '../../Images/times-solid.png';
+import ProfileEditDialog from '../Dialogs/ProfileEditDialog';
+import HamburgerMenuDialog from '../Dialogs/HamburgerMenuDialog';
 import LogoGif from '../../Images/activitynewslogo.gif';
 
 function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, setOpenSignupDialog }) {
   const [addLinkOpen, setAddLinkOpen] = useState(false);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
+  const [openHamburgerDialog, setOpenHamburgerDialog] = useState(false);
   const user = useSelector ((state) => state.user);
 
   function toggleAddLinkOpen() {
@@ -33,6 +35,10 @@ function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, set
 
   function clickLogoutExpand() {
     setOpenLogoutDialog(!openLogoutDialog)
+  }
+
+  function clickHamburgerMenu() {
+    setOpenHamburgerDialog(!openHamburgerDialog)
   }
 
   return(
@@ -63,6 +69,24 @@ function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, set
         />
       }
 
+      {openHamburgerDialog &&
+        <HamburgerMenuDialog 
+          open={openHamburgerDialog}
+          setOpenHamburgerDialog={setOpenHamburgerDialog}
+          setOpenSignupDialog={setOpenSignupDialog}
+          setOpenLoginDialog={setOpenLoginDialog}
+          setOpenLogoutDialog={setOpenLogoutDialog}
+          setOpenProfileExpand={setOpenProfileExpand}
+        />
+      }
+
+       {openProfileExpand &&
+        <ProfileEditDialog 
+          open={openProfileExpand}
+          setOpenProfileExpand={setOpenProfileExpand}
+        />
+       }
+
       <div className="left-nav">
         <img 
           src={LogoGif} 
@@ -77,13 +101,23 @@ function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, set
           <span className="logo-span">News</span>
         </NavLink>
 
+        <div 
+          className="hamburger-menu-container"
+          onClick={clickHamburgerMenu}
+        >
+          <img 
+            src="https://www.kindpng.com/picc/m/160-1608249_menu-icon-png-circle-transparent-png.png"
+            alt="hamburger menu icon"
+          />
+        </div>
+
         {user ?
         <div
           className="nav-item-container"
         >
           <div className="nav-main-container">
           <img 
-            src={openProfileExpand ? CloseX : user.profile_img} 
+            src={user.profile_img} 
             alt="nav profile pic" 
             className="profile-nav"
             onClick={clickProfileExpand}
@@ -142,6 +176,7 @@ function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, set
             className="nav-item"
             onClick={clickLoginDialog}
           >
+            <span className="header-hover">01</span>
             Log in
           </p>
           <p 
@@ -151,6 +186,7 @@ function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, set
             className="nav-item"
             onClick={clickSignupDialog}
           >
+            <span className="header-hover">02</span>
             Signup for free
           </p>
         </div>

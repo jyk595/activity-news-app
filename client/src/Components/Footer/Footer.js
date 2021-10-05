@@ -14,7 +14,7 @@ function Footer() {
         <MailchimpSubscribe 
           url={url}
         />
-        <p className="mailchimp-fine-print">By signing up for our newsletter, you hereby agree to our <a href="#">privacy policy</a>.</p>
+        <p className="mailchimp-fine-print">By signing up for our newsletter, you hereby agree to our <a href="www.notion.so">privacy policy</a>.</p>
       </div>
       <div className="footer-copyright">
         <p>© 2021 - Made by John Kim</p>
