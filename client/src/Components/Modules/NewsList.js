@@ -34,11 +34,15 @@ function NewsList({ setReadState }) {
         {/* <LineChart data={{"2021-05-13": 2, "2021-05-14": 5}} discrete={true} /> */}
 
         {articleList.map((article)=>{
-          return <NewsListCard
+          return <div
             key={article.id}
+          >
+          <span>{article.count}</span>
+          <NewsListCard
             article={article}
             setReadState={setReadState}
           />
+          </div>
         })}
       </div>}
     </>

@@ -10,6 +10,7 @@ import RenderedArticle from '../Modules/RenderedArticle';
 import NewsList from "../Modules/NewsList";
 import NotesList from "../Modules/NotesList";
 import ProfileExpand from "../Modules/ProfileExpand";
+import LogoGif from "../../Images/activitynewslogo.gif";
 import { getTags, getNotesList, getArticles, getRenderedArticle } from '../../redux/actions';
 
 function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
@@ -23,11 +24,11 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
     dispatch(getArticles(user));
     dispatch(getTags());
     dispatch(getNotesList(user.id))
-  },[dispatch, user, notesList]);
+  },[dispatch, user]);
 
   return(
     <>
-      {notesList && articleList &&
+      {notesList && articleList ?
       <Switch>
         <Route exact path="/:username/notes">
           <NotesList />
@@ -56,6 +57,13 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
           }
         </Route> 
       </Switch>
+      :
+      <div className="loading-animation-container">
+        <img 
+          src={LogoGif}
+          alt="logo-gif-animation"  
+        />
+      </div>
       }
     </>
   )

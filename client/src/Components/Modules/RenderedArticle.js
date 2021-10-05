@@ -48,6 +48,10 @@ function RenderedArticle({ readState, setReadState }) {
     }
   }
 
+  console.log(renderedArticle)
+
+  const parsedArticleContent = renderedArticle.content.split("TKTK")
+
   function handleNoteAdd(text, tagName) {
     const noteForm = {
       "content": text.innerHTML
@@ -80,6 +84,26 @@ function RenderedArticle({ readState, setReadState }) {
             src={renderedArticle.image_url} 
             alt={renderedArticle.title}
           />
+          <img 
+            src={renderedArticle.image_url} 
+            alt={renderedArticle.title}
+          />
+          <img 
+            src={renderedArticle.image_url} 
+            alt={renderedArticle.title}
+          />
+          <img 
+            src={renderedArticle.image_url} 
+            alt={renderedArticle.title}
+          />
+          <img 
+            src={renderedArticle.image_url} 
+            alt={renderedArticle.title}
+          />
+          <img 
+            src={renderedArticle.image_url} 
+            alt={renderedArticle.title}
+          />
         </div>
 
         <div className="article-content-container">
@@ -103,14 +127,22 @@ function RenderedArticle({ readState, setReadState }) {
 
           {renderedArticle.notes.map((note)=>{
             return <p 
-              key={note.id}
+              key={renderedArticle.id}
               className="article-note-item"
             >
               {note.content}
+              {/* <span>{note.tag.name}</span> */}
             </p>
           })}
 
-          <p className="article-p">{renderedArticle.content}</p>
+          <p className="article-p">
+            {parsedArticleContent.map((splitContent)=>{
+              return <p
+                key={splitContent}
+              >
+                {splitContent}</p>
+            })}
+          </p>
         </div>
 
         <div className="controls-container">

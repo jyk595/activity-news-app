@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import CloseX from '../../Images/times-solid.svg';
+import CloseX from '../../Images/times-solid.png';
 import { addNote } from '../../redux/actions';
 
 function AddNoteDialog({ setOpenAddNote }){

@@ -18,10 +18,10 @@ class ArticlesController < ApplicationController
     vetted_img = parsed_img.present? ? parsed_img.text : "https://i.ibb.co/sw9FSz0/no-image.png"
 
     parsed_p = parsed_page.css('p')
-    combined_content=[]
+    combined_content=""
     vetted_p = parsed_p.present? ? parsed_p.each{|p| 
-      combined_content << {content: p.text}
-    } : "#{url} is not a site that can be scraped. If you'd like, you can edit the title and img to save."
+      combined_content << p.text+'TKTK'}
+    : "#{url} is not a site that can be scraped. If you'd like, you can edit the title and img to save."
 
     article = User.find(params[:user_id]).articles.create!({
       "title" => vetted_h1,
@@ -48,7 +48,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    article = find_article_by_id
+    article = Article.find(params[:article_id])
     article.update(article_params)
     render json: article, status: :accepted
   end
@@ -61,19 +61,15 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    article = find_article_by_id
+    article = Article.find(params[:article_id])
     article.destroy
     head :no_content
   end
 
   private
 
-  def find_article_by_id
-    Article.find(params[:article_id])
-  end
-
   def article_params
-    params.permit(:title, :image_url, :content, :link, :is_read, :articles)
+    params.permit(:title, :image_url, :content, :link, :is_read, :article, :user_id)
   end
 
 end

@@ -30,6 +30,7 @@ function NotesList() {
         </div>
 
         <select 
+          className="tags-dropdown"
           onChange={clickTag}
         >
           <option value="All">All</option>
@@ -42,7 +43,6 @@ function NotesList() {
               {tag.name}
             </option>
           })}
-          <option>+ Add Tag</option>
         </select>
 
         {filteredNotesList.map((note)=>{
