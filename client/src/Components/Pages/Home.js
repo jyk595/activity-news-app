@@ -15,7 +15,7 @@ function Home({ setOpenSignupDialog}) {
             className="home-get-started-button"
             onClick={clickGetStarted}
           >
-            Get started
+            Get started for free
           </button>
         </div>
 

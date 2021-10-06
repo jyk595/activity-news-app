@@ -6,6 +6,11 @@ function NewsListCard({ article, setReadState }) {
   const { id, title, image_url } = article;
   const renderedArticle = useSelector((state) => state.renderedArticle);
   const dispatch = useDispatch();
+  // const renderedImage = <img 
+  //   src={image_url} 
+  //   alt={title}
+  //   className="article-card-preview"
+  // />
   
   function clickArticleCard() {
     dispatch(getRenderedArticle(article));
@@ -42,6 +47,7 @@ function NewsListCard({ article, setReadState }) {
           alt="preview of article"
           className="article-card-preview"
         />
+        {/* {renderedImage === "success" ? renderedImage : <img src="https://i.ibb.co/VgmSGzJ/no-image.png" alt={renderedArticle.title} className="article-card-preview" />} */}
         {title}
         <span
           className={renderedArticle.id === article.id ? "article-card-arrow" : "hide-article-card-arrow"}

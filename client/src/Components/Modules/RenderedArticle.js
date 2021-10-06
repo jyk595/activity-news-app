@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import TextSelector from 'text-selection-react';
 
 import AddNoteDialog from '../Dialogs/AddNoteDialog';
+import ArticleContentMapped from '../Modules/ArticleContentMapped';
 import ExportIcon from '../../Images/external-link-alt-solid.svg';
-import { addNote, deleteArticle, getRenderedArticle } from '../../redux/actions';
+import { deleteArticle, getRenderedArticle } from '../../redux/actions';
 
 function RenderedArticle({ readState, setReadState }) {
   const dispatch = useDispatch();
@@ -13,18 +13,12 @@ function RenderedArticle({ readState, setReadState }) {
   const renderedArticle = useSelector((state)=>state.renderedArticle);
   const articleList = useSelector((state) => state.articleList);
   const [openAddNote, setOpenAddNote] = useState(false);
-  const textSelectorTags = 
-    tagList.map((tag)=>{
-      return {
-        text: `${tag.name}`,
-        handler: (text) => {
-          handleNoteAdd(text, `${tag.name}`)
-        }
-      }
-    })
   const filteredArr = articleList.filter((article)=>article.id !== renderedArticle.id)
+  // const renderedImage = <img 
+  //   src={renderedArticle.image_url} 
+  //   alt={renderedArticle.title}
+  // />
     
-  console.log(renderedArticle)
   function clickDeleteButton() {
     dispatch(deleteArticle(renderedArticle.id));
     dispatch(getRenderedArticle(filteredArr[0]))
@@ -51,14 +45,6 @@ function RenderedArticle({ readState, setReadState }) {
 
   const parsedArticleContent = renderedArticle.content.split("TKTK")
 
-  function handleNoteAdd(text, tagName) {
-    const noteForm = {
-      "content": text.innerHTML
-    }
-
-    dispatch(addNote(renderedArticle.id, noteForm, tagName))
-  }
-
   function clickAddNote() {
     setOpenAddNote(true)
   } 
@@ -71,14 +57,16 @@ function RenderedArticle({ readState, setReadState }) {
         setOpenAddNote={setOpenAddNote}
       />}
 
-      <TextSelector
+      {/* <TextSelector
         events={textSelectorTags}
         // color={'yellow'}
         colorText={false}
-      />
+      /> */}
 
       <div className="article-container">
         <div className="article-image-container">
+          {/* {renderedImage.src === "success" ? renderedImage : <img src="https://i.ibb.co/VgmSGzJ/no-image.png"/>} */}
+          
           <img 
             src={renderedArticle.image_url} 
             alt={renderedArticle.title}
@@ -124,15 +112,18 @@ function RenderedArticle({ readState, setReadState }) {
             </a>
           </h1>
 
-          {renderedArticle.notes.map((note)=>{
+          <ArticleContentMapped 
+          
+          />
+          {/* {renderedArticle.notes.map((note)=>{
             return <p 
               key={renderedArticle.id}
               className="article-note-item"
             >
               {note.content}
               {/* <span>{note.tag.name}</span> */}
-            </p>
-          })}
+            {/* </p> */}
+          {/* })} */} */}
 
           <p className="article-p">
             {parsedArticleContent.map((splitContent)=>{
