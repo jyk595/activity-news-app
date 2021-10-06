@@ -138,7 +138,7 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
                   />
                   <input 
                     type="submit"
-                    value="Add Link"
+                    value="+"
                     className="dialog-hamburger-form-button"
                   />
                 </form>

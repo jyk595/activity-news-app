@@ -5,6 +5,7 @@ import { articleListReducer } from './articleListReducer';
 import { notesListReducer } from './notesListReducer';
 import { tagListReducer } from './tagListReducer';
 import { readReducer } from './readReducer';
+import { loadingReducer } from './loadingReducer';
 
 const rootReducer = combineReducers({
   user: userReducer, 
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   articleList: articleListReducer,
   notesList: notesListReducer,
   tagList: tagListReducer,
-  readState: readReducer
+  readState: readReducer,
+  loading: loadingReducer
 });
 
 export default rootReducer;

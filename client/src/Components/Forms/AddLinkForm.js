@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { addArticle } from '../../redux/actions';
+import { addArticle,loadingOn } from '../../redux/actions';
 
 function AddLinkForm({ setAddLinkOpen }) {
   const dispatch = useDispatch();
@@ -18,6 +18,7 @@ function AddLinkForm({ setAddLinkOpen }) {
 
   function submitAddLink(e) {
     e.preventDefault();
+    dispatch(loadingOn());
     dispatch(addArticle(addLinkData, user));
     setAddLinkData({
       url: ""

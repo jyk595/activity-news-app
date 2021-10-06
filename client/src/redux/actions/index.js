@@ -26,32 +26,38 @@ export function loginUser(loginFormData) {
 }
 
 export function createUser(signupFormData) {
-  return(dispatch)=>{
-    fetch('/signup',{
+  return async(dispatch)=>{
+    const response = await fetch('/signup',{
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(signupFormData)
     })
-    .then(res=>res.json())
-    .then(data=>{
-      dispatch({ type: "LOGIN", payload: data })
 
-      fetch(`/conventional_add/${data.id}`,{
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          title: "Getting started with 🗞️  Activity.News ↴",
-          image_url: "https://deathtostock.imgix.net/000/003/651/original/RCC_-_DTS_HOME_65.jpg?w=630&h=420&fit=clip&dpr=1&auto=compress&q=75&ixlib=js-2.3.1&s=10512746dc0b3cd4c81b733e1aac00a1",
-          content: "1. Find a site you want to keep tabs on while you're browsing? Easy! Just copy the URL.TKTK2. Head over to Activity.News and add your link.TKTK3. Your links will be parsed and saved in your main feed.TKTKT4. As you finish reading your list, mark articles or delete them from your feed. TKTK5. Add notes as you go. Simply highlight the text to save it or click Add Note to write something new.TKTK6. That's it! Have fun! 🙂TKTK-- Activity.News team",
-          link: "#",
-          is_read: true
+    if (response.ok) {
+      response.json()
+      .then(data=>{
+        dispatch({ type: "LOGIN", payload: data })
+  
+        fetch(`/conventional_add/${data.id}`,{
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            title: "Getting started with 🗞️  Activity.News ↴",
+            image_url: "https://deathtostock.imgix.net/000/003/651/original/RCC_-_DTS_HOME_65.jpg?w=630&h=420&fit=clip&dpr=1&auto=compress&q=75&ixlib=js-2.3.1&s=10512746dc0b3cd4c81b733e1aac00a1",
+            content: "1. Find a site you want to keep tabs on while you're browsing? Easy! Just copy the URL.TKTK2. Head over to Activity.News and add your link.TKTK3. Your links will be parsed and saved in your main feed.TKTKT4. As you finish reading your list, mark articles or delete them from your feed. TKTK5. Add notes as you go. Simply highlight the text to save it or click Add Note to write something new.TKTK6. That's it! Have fun! 🙂TKTK-- Activity.News team",
+            link: "#",
+            is_read: true
+          })
+        })
+        .then(res=>res.json())
+        .then(moreData=>{
+          dispatch({ type: "GET_RENDERED_ARTICLE", payload: moreData})
         })
       })
-      .then(res=>res.json())
-      .then(moreData=>{
-        dispatch({ type: "GET_RENDERED_ARTICLE", payload: moreData})
-      })
-    })
+    } else {
+      response.json()
+      .then(data=>alert(data.errors))
+    }
   }
 }
 
@@ -70,7 +76,7 @@ export function updateUser(editFormData, user) {
 }
 
 export function logoutUser() {
-  return(dispatch, getState)=>{
+  return(dispatch)=>{
     fetch('/logout', {
       method:'DELETE'
     })
@@ -78,22 +84,50 @@ export function logoutUser() {
   }
 }
 
+// Loading Actions
+
+export function loadingOn() {
+  return(dispatch) => {
+    dispatch({ type:"LOADING_ON" })
+  }
+}
+
 // renderedArticle Actions
-export function getRenderedArticle(article_data) {
+export function getRenderedArticle(article) {
   return (dispatch) => {
-    dispatch({ type: "GET_RENDERED_ARTICLE", payload: article_data })
+    dispatch({ type: "GET_RENDERED_ARTICLE", payload: article })
   }
 }
 
 // articleList Actions
+export function getInitialLists(user) {
+  return(dispatch, getState) => {
+    fetch(`/users/${user.id}/articles`)
+    .then(res=>res.json())
+    .then(data=>{
+      dispatch({ type: "GET_ARTICLE_LIST", payload: data})
+
+      fetch('/tags')
+      .then(res=>res.json())
+      .then((moreData)=>{
+        dispatch({ type: "GET_TAGS", payload: moreData})
+      });
+
+      fetch(`/users/${user.id}/notes`)
+      .then(res=>res.json())
+      .then(evenMoreData=>{
+        dispatch({ type: "GET_NOTES_LIST", payload: evenMoreData})
+      })
+    })
+  }
+}
+
 export function getArticles(user) {
   return(dispatch, getState) => {
     fetch(`/users/${user.id}/articles`)
     .then(res=>res.json())
     .then(data=>{
       dispatch({ type: "GET_ARTICLE_LIST", payload: data})
-      console.log(data)
-      dispatch({ type: "GET_RENDERED_ARTICLE", payload: data[0]})
     })
   }
 }
@@ -108,7 +142,7 @@ export function deleteArticle(article_id) {
 }
 
 export function addArticle(addLinkData, user) {
-  return(dispatch, getState)=>{
+  return(dispatch)=>{    
     fetch(`/add_link/${user.id}`, {
       method: "POST",
       headers: {
@@ -120,12 +154,18 @@ export function addArticle(addLinkData, user) {
     .then(data=>{
       dispatch({ type:"GET_RENDERED_ARTICLE", payload: data})
       dispatch({ type:"ADD_ARTICLE_TO_ARTICLE_LIST", payload: data})
+      dispatch({ type:"LOADING_OFF" })
     })
   }
+  // if if_loading is true, show the loading gif, otherwise do the fetch
+  // dispatch({ type:"START_LOAD" })
+  // case "START_LOAD": {
+  //     return !state
+  // }
 }
 
 export function markAllAsRead(user_id) {
-  return(dispatch, getState)=>{
+  return(dispatch)=>{
     fetch(`/users/${user_id}/articles`,{
       method: "PATCH",
       headers: {
@@ -155,14 +195,24 @@ export function articleAsRead(article_id) {
     .then(data=>{
       dispatch({ type:"PATCH_READ_ARTICLE_LIST", payload: data })
     })
-    
-    // if (response.ok) {
-    //   response.json()
-    //   .then((data)=>{
-    //     article.is_read = data.is_read;
-        
-    //   })
-    // }
+  }
+}
+
+export function patchSwitchRead(rendered_article, is_read_status) {
+  return(dispatch)=>{
+    fetch(`/articles/${rendered_article.id}`,{
+      method: "PATCH",
+      header: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        is_read: is_read_status
+      })
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      console.log(data)
+      dispatch({ type:"READ_SWITCH" })
+      dispatch({ type:"PATCH_READ_ARTICLE_LIST", payload: data })
+    })
   }
 }
 

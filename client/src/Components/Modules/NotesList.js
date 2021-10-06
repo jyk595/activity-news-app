@@ -18,6 +18,8 @@ function NotesList() {
     }
   }
 
+  console.log(notesList)
+
   return(
     <>
       {notesList && tagList && articleList &&

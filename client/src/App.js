@@ -12,6 +12,7 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import Home from './Components/Pages/Home';
 import UserRoute from './Components/Routes/UserRoute';
+import NoAccess from './Components/Modules/NoAccess';
 import { getUser } from './redux/actions/index';
 
 function App() {
@@ -34,18 +35,20 @@ function App() {
       />
       <FadeIn>
       <Switch>
-        {user &&
-          <Route path="/:username">
-            <UserRoute 
-            />
-          </Route>
-        }
-
         <Route exact path="/">
           <Home 
             setOpenSignupDialog={setOpenSignupDialog}
           />
         </Route>
+
+        {user ?
+          <Route exact path="/:username">
+            <UserRoute 
+            />
+          </Route>
+          :
+          <NoAccess />
+        }
       </Switch>
       </FadeIn>
 

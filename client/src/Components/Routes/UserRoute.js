@@ -1,29 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import FadeIn from 'react-fade-in';
 
 import { 
   Switch,
   Route
 } from 'react-router-dom';
 
+import Loading from '../Modules/Loading';
 import RenderedArticle from '../Modules/RenderedArticle';
 import NewsList from "../Modules/NewsList";
 import NotesList from "../Modules/NotesList";
 import ProfileEditDialog from '../Dialogs/ProfileEditDialog';
-import LogoGif from "../../Images/activitynewslogo.gif";
-import { getTags, getNotesList, getArticles } from '../../redux/actions';
+import { getInitialLists } from '../../redux/actions';
 
 function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
   const dispatch = useDispatch();
   const user = useSelector((state)=>state.user);
+  const loading = useSelector((state)=>state.loading);
   const notesList = useSelector((state) => state.notesList);
   const articleList = useSelector((state) => state.articleList);
 
   useEffect(()=>{
-    dispatch(getArticles(user));
-    dispatch(getTags());
-    dispatch(getNotesList(user.id))
+    dispatch(getInitialLists(user));
   },[dispatch, user]);
 
   return(
@@ -37,10 +35,15 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
               setOpenProfileExpand={setOpenProfileExpand}
             />
           }
-          
-          <NotesList />
-          
-          <RenderedArticle />
+
+          {!loading ?
+            <div>
+              <NotesList />
+              <RenderedArticle />
+            </div>
+          :
+          <Loading />
+          }
         </Route>
         
         <Route exact path="/:username">
@@ -51,20 +54,19 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
             />
           }
           
-          <NewsList />
+          {!loading ?
+          <div>
+            <NewsList />
 
-          <RenderedArticle />
+            <RenderedArticle />
+          </div>
+          :
+          <Loading />
+          }
         </Route> 
       </Switch>
       :
-      <FadeIn>
-        <div className="loading-animation-container">
-          <img 
-            src={LogoGif}
-            alt="logo-gif-animation"  
-          />
-        </div>
-      </FadeIn>
+      <Loading />
       }
     </>
   )

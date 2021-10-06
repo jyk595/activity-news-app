@@ -151,7 +151,7 @@ header {
 .loading-animation-container {
   width: 33vw;
   height: 100vh;
-  margin: 20vh auto;
+  margin: 15vh auto;
 }
 
 .loading-animation-container img {
@@ -386,7 +386,7 @@ header {
   color: #0000ff;
   font-size: 24px;
   font-family: "Heebo", sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   text-decoration: underline;
   cursor: pointer;
   transition: 0.5s;
@@ -400,6 +400,24 @@ header {
 .home-explanation-p {
   font-size: 32px;
   font-family: "Lora", serif;
+}
+
+.no-access-container {
+  width: 50vw;
+  margin: 20vh auto;
+}
+
+.no-access-container h3 {
+  font-size: 32px;
+  font-family: "Heebo", sans-serif;
+  letter-spacing: -2px;
+  line-height: 100%;
+  margin-bottom: 16px
+}
+
+.no-access-container p {
+  font-family: "Lora", serif;
+  font-size: 14px;
 }
 
 /* Feed Page Styles */
@@ -937,7 +955,7 @@ footer {
     border-radius: 0;
     border: none;
     border-bottom: 1px solid #222;
-    width: calc(100% - 120px);
+    width: calc(100% - 90px);
     margin-left: 40px;
     padding: 16px 0;
     outline: none;

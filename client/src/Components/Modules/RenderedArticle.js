@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextSelector from 'text-selection-react';
 
 import AddNoteDialog from '../Dialogs/AddNoteDialog';
 import RenderedArticleNote from './RenderedArticleNote';
 import ExportIcon from '../../Images/external-link-alt-solid.svg';
-import { deleteArticle, getRenderedArticle, addNote, readSwitch } from '../../redux/actions';
+import { deleteArticle, getRenderedArticle, addNote, readSwitch, patchSwitchRead } from '../../redux/actions';
 
 function RenderedArticle() {
   const dispatch = useDispatch();
@@ -16,15 +16,10 @@ function RenderedArticle() {
   const readState = useSelector((state)=>state.readState)
   const [openAddNote, setOpenAddNote] = useState(false);
   const filteredArr = articleList.filter((article)=>article.id !== renderedArticle.id)
-  const textSelectorTags = 
-    tagList.map((tag)=>{
-      return {
-        text: `${tag.name}`,
-        handler: (text) => {
-          handleNoteAdd(text, `${tag.name}`)
-        }
-      }
-    })
+
+  useEffect(()=>{
+    dispatch(getRenderedArticle(articleList[0]));
+  },[articleList, dispatch])
     
   function clickDeleteButton() {
     dispatch(deleteArticle(renderedArticle.id));
@@ -32,22 +27,23 @@ function RenderedArticle() {
   }
 
   async function clickReadButton() {
-    const response = await fetch(`/articles/${renderedArticle.id}`,{
-      method: "PATCH",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        is_read: !renderedArticle.is_read
-      })
-    })
-    if (response.ok) {
-      response.json()
-      .then((data)=>{
-        renderedArticle.is_read = data.is_read
-        dispatch(readSwitch())
-      })
-    }
+    // const response = await fetch(`/articles/${renderedArticle.id}`,{
+    //   method: "PATCH",
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     is_read: !renderedArticle.is_read
+    //   })
+    // })
+    // if (response.ok) {
+    //   response.json()
+    //   .then((data)=>{
+    //     renderedArticle.is_read = data.is_read
+    //     dispatch(readSwitch())
+    //   })
+    // }
+    dispatch(patchSwitchRead(renderedArticle, !renderedArticle.is_read))
   }
 
   function handleNoteAdd(text, tagName) {
@@ -66,15 +62,27 @@ function RenderedArticle() {
       
   return(
     <>
-    {articleList && renderedArticle.notes && notesList && tagList &&
+    {articleList && renderedArticle && renderedArticle.notes && notesList && tagList &&
     <div>
       {openAddNote && <AddNoteDialog
         setOpenAddNote={setOpenAddNote}
       />}
 
-      <TextSelector
+      {/* <TextSelector
         events={textSelectorTags}
         // color={'yellow'}
+        colorText={false}
+      /> */}
+
+      <TextSelector 
+        events={tagList.map((tag)=>{
+          return {
+            text: `${tag.name}`,
+            handler: (text) => {
+              handleNoteAdd(text, `${tag.name}`)
+            }
+          }
+        })}
         colorText={false}
       />
 

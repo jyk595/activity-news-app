@@ -9,5 +9,4 @@ export function userReducer(state = false, action) {
     default: 
       return state
   } 
-    
 };
