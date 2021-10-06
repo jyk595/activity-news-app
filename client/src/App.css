@@ -624,6 +624,7 @@ header {
   padding: 8px 16px;
   background: #f5f5f5;
   outline: none;
+  height: 40px;
 }
 
 .note-item-content {
@@ -846,7 +847,7 @@ footer {
 
   .dialog-section-container {
     margin: 10vh 0 0;
-    width: calc(100% - 80px);
+    width: 100%;
   }
 
   .create-dialog-section-container {
@@ -858,6 +859,32 @@ footer {
     font-size: 32px;
     display: block;
     margin-bottom: 24px;
+  }
+
+  .dialog-hamburger-form-input {
+    background: transparent;
+    font-family: "Heebo", sans-serif;
+    font-size: 14px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #222;
+    width: calc(100% - 120px);
+    margin-left: 40px;
+    padding: 16px 0;
+    outline: none;
+  }
+
+  .dialog-hamburger-form-button {
+    background: none;
+    font-family: "Heebo", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0000ff;
+    border: none;
+    float: right;
+    margin-top: 16px;
+    cursor: pointer;
+    z-index: 100;
   }
 
   /* Feed Page Styles */

@@ -11,7 +11,7 @@ import NewsList from "../Modules/NewsList";
 import NotesList from "../Modules/NotesList";
 import ProfileEditDialog from '../Dialogs/ProfileEditDialog';
 import LogoGif from "../../Images/activitynewslogo.gif";
-import { getTags, getNotesList, getArticles, getRenderedArticle } from '../../redux/actions';
+import { getTags, getNotesList, getArticles } from '../../redux/actions';
 
 function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
   const dispatch = useDispatch();

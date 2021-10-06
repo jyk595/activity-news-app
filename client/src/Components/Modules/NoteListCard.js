@@ -39,6 +39,7 @@ function NoteListCard({ note }) {
       <a
         href={note.article.link}
         target="_blank"
+        rel="noreferrer"
       >
         <img 
           src={ExportIcon}

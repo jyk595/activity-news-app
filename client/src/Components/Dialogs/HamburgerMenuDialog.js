@@ -1,10 +1,17 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import MailchimpSubscribe from "react-mailchimp-subscribe";
 
 import CloseX from '../../Images/times-solid.png';
+import { addArticle } from '../../redux/actions';
 
 function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setOpenLoginDialog, setOpenLogoutDialog, setOpenProfileExpand }) {
+  const dispatch = useDispatch();
+  const [expandAddLinkHamburger, setExpandAddLinkHamburger] = useState(false);
+  const [hamburgerLinkData, setHamburgerLinkData] = useState({
+    url: ""
+  });
   const user = useSelector((state)=>state.user);
   const url = `https://gmail.us5.list-manage.com/subscribe/post?u=${process.env.REACT_APP_MAILCHIMP_U}&amp;id=${process.env.REACT_APP_MAILCHIMP_ID}`
   
@@ -31,6 +38,23 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
     setOpenHamburgerDialog(false)
     setOpenProfileExpand(true)
   }
+
+  function clickHamburgerAddLink() {
+    setExpandAddLinkHamburger(!expandAddLinkHamburger)
+  }
+
+  function changeHamburgerLink(e) {
+    setHamburgerLinkData({
+      url: e.target.value
+    })
+  }
+
+  function submitAddLinkHamburger(e) {
+    e.preventDefault();
+    dispatch(addArticle(hamburgerLinkData, user));
+    setHamburgerLinkData({ url: "" });
+    setExpandAddLinkHamburger(false);
+  }
   
   return(
     <div className="dialog-container">
@@ -51,7 +75,7 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
                 onClick={clickSignupFromMenu}
               >
                 <span className="header-hover">02</span>
-                Signup for free
+                Sign up
               </h2>
               <div className="mailchimp-container">
                 <h3>Get the trendiest news straight to your inbox.</h3>
@@ -62,19 +86,12 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
             </div>
             :
             <div className="dialog-hamburger-menu-container">
-              <h3
-                className="dialog-hamburger-menu-items"
-                onClick={clickProfileFromMenu}
-              >
-                <span className="header-hover">01</span>
-                Your profile
-              </h3>
               <NavLink 
                 exact to={`/${user.username}`}
                 className="dialog-hamburger-menu-items"
                 onClick={clickCloseX}
               >
-                <span className="header-hover">02</span>
+                <span className="header-hover">01</span>
                 Feed
               </NavLink>
               <NavLink 
@@ -82,14 +99,48 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
                 className="dialog-hamburger-menu-items"
                 onClick={clickCloseX}
               >
-                <span className="header-hover">03</span>
+                <span className="header-hover">02</span>
                 Notes
               </NavLink>
               <h3
                 className="dialog-hamburger-menu-items"
-                onClick={clickLogoutFromMenu}
+                onClick={clickHamburgerAddLink}
+              >
+                <span className="header-hover">03</span>
+                Add link
+              </h3>
+              {expandAddLinkHamburger &&
+              <form
+                className="dialog-hamburger-form-container"
+                onSubmit={submitAddLinkHamburger}
+              >
+                <input 
+                  type="text"
+                  name="url"
+                  placeholder="Place URL here"
+                  value={hamburgerLinkData.url}
+                  className="dialog-hamburger-form-input"
+                  onChange={changeHamburgerLink}
+                />
+                <input 
+                  type="submit"
+                  value="Add Link"
+                  className="dialog-hamburger-form-button"
+                />
+              </form>
+              }
+              <h3
+                className="dialog-hamburger-menu-items"
+                onClick={clickProfileFromMenu}
               >
                 <span className="header-hover">04</span>
+                Your profile
+              </h3>
+              <h3
+                className="dialog-hamburger-menu-items"
+                onClick={clickLogoutFromMenu}
+              >
+                <span className="header-hover">05</span>
                 Logout
               </h3>
               <div className="mailchimp-container">
