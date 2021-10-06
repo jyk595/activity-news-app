@@ -9,9 +9,6 @@ function NotesList() {
   const tagList = useSelector((state) => state.tagList);
   const notesList = useSelector((state) => state.notesList);
   const articleList = useSelector((state) => state.articleList);
-  // const renderedArticle = useSelector((state) => state.renderedArticle);
-
-  // const [filteredNotesList, setFilteredNotesList] = useState(notesList);
 
   function clickTag(e) {
     if (e.target.value === "All" || e.target.value === "") {

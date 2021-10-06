@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import MailchimpSubscribe from "react-mailchimp-subscribe";
+import FadeIn from 'react-fade-in';
 
 import CloseX from '../../Images/times-solid.png';
 import { addArticle } from '../../redux/actions';
@@ -63,20 +64,26 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
           <div className="dialog-header-container">            
             {!user ?
             <div className="dialog-hamburger-menu-container">
-              <h2 
-                className="dialog-hamburger-menu-items"
-                onClick={clickLoginFromMenu}
-              >
-                <span className="header-hover">01</span>
-                Log in
-              </h2>
-              <h2 
-                className="dialog-hamburger-menu-items"
-                onClick={clickSignupFromMenu}
-              >
-                <span className="header-hover">02</span>
-                Sign up
-              </h2>
+              <FadeIn>
+                <h2 
+                  className="dialog-hamburger-menu-items"
+                  onClick={clickLoginFromMenu}
+                >
+                  <span className="header-hover">01</span>
+                  Log in
+                </h2>
+              </FadeIn>
+
+              <FadeIn>
+                <h2 
+                  className="dialog-hamburger-menu-items"
+                  onClick={clickSignupFromMenu}
+                >
+                  <span className="header-hover">02</span>
+                  Sign up
+                </h2>
+              </FadeIn>
+
               <div className="mailchimp-container">
                 <h3>Get the trendiest news straight to your inbox.</h3>
                 <MailchimpSubscribe 
@@ -86,63 +93,78 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
             </div>
             :
             <div className="dialog-hamburger-menu-container">
-              <NavLink 
-                exact to={`/${user.username}`}
-                className="dialog-hamburger-menu-items"
-                onClick={clickCloseX}
-              >
-                <span className="header-hover">01</span>
-                Feed
-              </NavLink>
-              <NavLink 
-                exact to={`/${user.username}/notes`}
-                className="dialog-hamburger-menu-items"
-                onClick={clickCloseX}
-              >
-                <span className="header-hover">02</span>
-                Notes
-              </NavLink>
-              <h3
-                className="dialog-hamburger-menu-items"
-                onClick={clickHamburgerAddLink}
-              >
-                <span className="header-hover">03</span>
-                Add link
-              </h3>
-              {expandAddLinkHamburger &&
-              <form
-                className="dialog-hamburger-form-container"
-                onSubmit={submitAddLinkHamburger}
-              >
-                <input 
-                  type="text"
-                  name="url"
-                  placeholder="Place URL here"
-                  value={hamburgerLinkData.url}
-                  className="dialog-hamburger-form-input"
-                  onChange={changeHamburgerLink}
-                />
-                <input 
-                  type="submit"
-                  value="Add Link"
-                  className="dialog-hamburger-form-button"
-                />
-              </form>
-              }
-              <h3
-                className="dialog-hamburger-menu-items"
-                onClick={clickProfileFromMenu}
-              >
-                <span className="header-hover">04</span>
-                Your profile
-              </h3>
-              <h3
-                className="dialog-hamburger-menu-items"
-                onClick={clickLogoutFromMenu}
-              >
-                <span className="header-hover">05</span>
-                Logout
-              </h3>
+              <FadeIn>
+                <NavLink 
+                  exact to={`/${user.username}`}
+                  className="dialog-hamburger-menu-items"
+                  onClick={clickCloseX}
+                >
+                  <span className="header-hover">01</span>
+                  Feed
+                </NavLink>
+              </FadeIn>
+
+              <FadeIn>
+                <NavLink 
+                  exact to={`/${user.username}/notes`}
+                  className="dialog-hamburger-menu-items"
+                  onClick={clickCloseX}
+                >
+                  <span className="header-hover">02</span>
+                  Notes
+                </NavLink>
+              </FadeIn>
+
+              <FadeIn>
+                <h3
+                  className="dialog-hamburger-menu-items"
+                  onClick={clickHamburgerAddLink}
+                >
+                  <span className="header-hover">03</span>
+                  Add link
+                </h3>
+                {expandAddLinkHamburger &&
+                <form
+                  className="dialog-hamburger-form-container"
+                  onSubmit={submitAddLinkHamburger}
+                >
+                  <input 
+                    type="text"
+                    name="url"
+                    placeholder="Place URL here"
+                    value={hamburgerLinkData.url}
+                    className="dialog-hamburger-form-input"
+                    onChange={changeHamburgerLink}
+                  />
+                  <input 
+                    type="submit"
+                    value="Add Link"
+                    className="dialog-hamburger-form-button"
+                  />
+                </form>
+                }
+              </FadeIn>
+
+              <FadeIn>
+                <h3
+                  className="dialog-hamburger-menu-items"
+                  onClick={clickProfileFromMenu}
+                >
+                  <span className="header-hover">04</span>
+                  Your profile
+                </h3>
+              </FadeIn>
+
+              <FadeIn>
+                <h3
+                  className="dialog-hamburger-menu-items"
+                  onClick={clickLogoutFromMenu}
+                >
+                  <span className="header-hover">05</span>
+                  Logout
+                </h3>
+              </FadeIn>
+
               <div className="mailchimp-container">
               <h3>Get the trendiest news straight to your inbox.</h3>
                 <MailchimpSubscribe 

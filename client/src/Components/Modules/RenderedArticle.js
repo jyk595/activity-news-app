@@ -1,23 +1,30 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import TextSelector from 'text-selection-react';
 
 import AddNoteDialog from '../Dialogs/AddNoteDialog';
-import ArticleContentMapped from '../Modules/ArticleContentMapped';
+import RenderedArticleNote from './RenderedArticleNote';
 import ExportIcon from '../../Images/external-link-alt-solid.svg';
-import { deleteArticle, getRenderedArticle } from '../../redux/actions';
+import { deleteArticle, getRenderedArticle, addNote, readSwitch } from '../../redux/actions';
 
-function RenderedArticle({ readState, setReadState }) {
+function RenderedArticle() {
   const dispatch = useDispatch();
   const tagList = useSelector((state)=>state.tagList);
   const notesList = useSelector((state)=>state.notesList);
   const renderedArticle = useSelector((state)=>state.renderedArticle);
   const articleList = useSelector((state) => state.articleList);
+  const readState = useSelector((state)=>state.readState)
   const [openAddNote, setOpenAddNote] = useState(false);
   const filteredArr = articleList.filter((article)=>article.id !== renderedArticle.id)
-  // const renderedImage = <img 
-  //   src={renderedArticle.image_url} 
-  //   alt={renderedArticle.title}
-  // />
+  const textSelectorTags = 
+    tagList.map((tag)=>{
+      return {
+        text: `${tag.name}`,
+        handler: (text) => {
+          handleNoteAdd(text, `${tag.name}`)
+        }
+      }
+    })
     
   function clickDeleteButton() {
     dispatch(deleteArticle(renderedArticle.id));
@@ -38,9 +45,17 @@ function RenderedArticle({ readState, setReadState }) {
       response.json()
       .then((data)=>{
         renderedArticle.is_read = data.is_read
-        setReadState(!readState)
+        dispatch(readSwitch())
       })
     }
+  }
+
+  function handleNoteAdd(text, tagName) {
+    const noteForm = {
+      "content": text.innerHTML
+    }
+
+    dispatch(addNote(renderedArticle.id, noteForm, tagName))
   }
 
   const parsedArticleContent = renderedArticle.content.split("TKTK")
@@ -57,11 +72,11 @@ function RenderedArticle({ readState, setReadState }) {
         setOpenAddNote={setOpenAddNote}
       />}
 
-      {/* <TextSelector
+      <TextSelector
         events={textSelectorTags}
         // color={'yellow'}
         colorText={false}
-      /> */}
+      />
 
       <div className="article-container">
         <div className="article-image-container">
@@ -69,27 +84,33 @@ function RenderedArticle({ readState, setReadState }) {
           
           <img 
             src={renderedArticle.image_url} 
-            alt={renderedArticle.title}
+            alt="main collage 1"
+            onError={(e)=>{e.target.onerror = null; e.target.src="https://i.ibb.co/19PvMCT/no-image.png"}}
           />
           <img 
             src={renderedArticle.image_url} 
-            alt={renderedArticle.title}
+            alt="main collage 2"
+            onError={(e)=>{e.target.onerror = null; e.target.src="https://i.ibb.co/19PvMCT/no-image.png"}}
           />
           <img 
             src={renderedArticle.image_url} 
-            alt={renderedArticle.title}
+            alt="main collage 3"
+            onError={(e)=>{e.target.onerror = null; e.target.src="https://i.ibb.co/19PvMCT/no-image.png"}}
           />
           <img 
             src={renderedArticle.image_url} 
-            alt={renderedArticle.title}
+            alt="main collage 4"
+            onError={(e)=>{e.target.onerror = null; e.target.src="https://i.ibb.co/19PvMCT/no-image.png"}}
           />
           <img 
             src={renderedArticle.image_url} 
-            alt={renderedArticle.title}
+            alt="main collage 5"
+            onError={(e)=>{e.target.onerror = null; e.target.src="https://i.ibb.co/19PvMCT/no-image.png"}}
           />
           <img 
             src={renderedArticle.image_url} 
-            alt={renderedArticle.title}
+            alt="main collage 6"
+            onError={(e)=>{e.target.onerror = null; e.target.src="https://i.ibb.co/19PvMCT/no-image.png"}}
           />
         </div>
 
@@ -112,18 +133,11 @@ function RenderedArticle({ readState, setReadState }) {
             </a>
           </h1>
 
-          <ArticleContentMapped 
-          
-          />
-          {/* {renderedArticle.notes.map((note)=>{
-            return <p 
-              key={renderedArticle.id}
-              className="article-note-item"
-            >
-              {note.content}
-              {/* <span>{note.tag.name}</span> */}
-            {/* </p> */}
-          {/* })} */} */}
+          {renderedArticle.notes.map((note)=>{
+            return <RenderedArticleNote 
+              note={note}
+            />
+          })}
 
           <p className="article-p">
             {parsedArticleContent.map((splitContent)=>{

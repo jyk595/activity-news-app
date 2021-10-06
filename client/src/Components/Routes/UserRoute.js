@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import FadeIn from 'react-fade-in';
 
 import { 
   Switch,
@@ -18,7 +19,6 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
   const user = useSelector((state)=>state.user);
   const notesList = useSelector((state) => state.notesList);
   const articleList = useSelector((state) => state.articleList);
-  const[readState,setReadState] = useState(false);
 
   useEffect(()=>{
     dispatch(getArticles(user));
@@ -40,10 +40,7 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
           
           <NotesList />
           
-          <RenderedArticle 
-            readState={readState}
-            setReadState={setReadState}
-          />
+          <RenderedArticle />
         </Route>
         
         <Route exact path="/:username">
@@ -54,23 +51,20 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
             />
           }
           
-          <NewsList 
-            setReadState={setReadState}
-          />
+          <NewsList />
 
-          <RenderedArticle 
-            readState={readState}
-            setReadState={setReadState}
-          />
+          <RenderedArticle />
         </Route> 
       </Switch>
       :
-      <div className="loading-animation-container">
-        <img 
-          src={LogoGif}
-          alt="logo-gif-animation"  
-        />
-      </div>
+      <FadeIn>
+        <div className="loading-animation-container">
+          <img 
+            src={LogoGif}
+            alt="logo-gif-animation"  
+          />
+        </div>
+      </FadeIn>
       }
     </>
   )

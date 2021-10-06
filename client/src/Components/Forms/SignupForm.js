@@ -33,7 +33,6 @@ function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, se
     e.preventDefault();
 
     dispatch(createUser(signupFormData));
-    history.push(`/${signupFormData.username}`)
     setOpenSignupDialog(false)
     setSignupFormData({
       username: "",
@@ -43,6 +42,7 @@ function SignupForm({ openSignupDialog, setOpenSignupDialog, openLoginDialog, se
       password: "",
       password_confirmation: ""
     })
+    history.push(`/${signupFormData.username}`)
   }
   
   return(

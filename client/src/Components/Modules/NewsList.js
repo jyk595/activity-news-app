@@ -3,16 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { LineChart } from 'react-chartkick';
 import 'chartkick/chart.js';
 
-import { markAllAsRead } from '../../redux/actions';
+import { markAllAsRead, readTurnTrue } from '../../redux/actions';
 
-function NewsList({ setReadState }) {
+function NewsList() {
   const dispatch = useDispatch();
   const user = useSelector((state)=>state.user);
   const articleList = useSelector((state)=>state.articleList);
   
   function clickAllAsRead() {
     dispatch(markAllAsRead(user.id));
-    setReadState(true);
+    dispatch(readTurnTrue())
   }
   
   return(
@@ -40,7 +40,6 @@ function NewsList({ setReadState }) {
           <span>{article.count}</span>
           <NewsListCard
             article={article}
-            setReadState={setReadState}
           />
           </div>
         })}

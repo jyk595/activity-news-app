@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   # Notes Controller
   get '/users/:user_id/notes', to: 'notes#show'
   post '/articles/:article_id', to: 'notes#create'
+  patch '/notes/:note_id', to: 'notes#update'
   delete '/notes/:note_id', to: 'notes#destroy'
   
   # Tags Controller
