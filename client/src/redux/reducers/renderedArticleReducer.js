@@ -20,10 +20,25 @@ export function renderedArticleReducer (state= initialRenderedArticle, action) {
         ]
       }
     }
+    case "NOTE_UPDATE_ARTICLE": {
+      return {
+        ...state,
+        notes: state.notes.map((info) =>
+          info.id == action.payload.id ? {...info, content: action.payload.content}
+          : info
+        )
+      }
+    }
     case "MARK_RENDERED_ARTICLE_AS_READ": {
       return {
         ...state,
         is_read: true
+      }
+    }
+    case "DELETE_NOTE_FROM_ARTICLE": {
+      return{
+        ...state,
+        notes: state.notes.filter((note) => note.id !== action.payload)
       }
     }
     default:

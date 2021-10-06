@@ -12,6 +12,12 @@ class NotesController < ApplicationController
     render json: note, status: :created
   end
 
+  def update
+    note = Note.find(params[:note_id])
+    note.update(note_params)
+    render json: note, status: :accepted
+  end
+
   def destroy
     note = Note.find(params[:note_id])
     note.destroy
@@ -21,7 +27,7 @@ class NotesController < ApplicationController
   private
 
   def note_params
-    params.permit(:content)
+    params.permit(:note, :content)
   end
 
 end

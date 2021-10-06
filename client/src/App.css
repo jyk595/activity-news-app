@@ -149,9 +149,9 @@ header {
 /* Loading Animation Styles */
 
 .loading-animation-container {
-  width: 100vw;
+  width: 33vw;
   height: 100vh;
-  margin: 0 auto;
+  margin: 20vh auto;
 }
 
 .loading-animation-container img {
@@ -211,6 +211,7 @@ header {
 
 .profile-expand-input {
   display: block;
+  border-radius: 0;
 }
 
 /* Dialog Styles */
@@ -542,8 +543,9 @@ header {
 
 .article-note-item {
   background: white;
-  padding: 16px;
+  padding: 16px 16px 4px;
   border-radius: 10px;
+  font-family: "Lora";
 }
 
 .article-p {
@@ -606,6 +608,20 @@ header {
   text-decoration: none !important;
 }
 
+.article-note-icon-container {
+  margin-top: 8px;
+}
+
+.article-note-edit-textarea {
+  width: calc(100% - 32px);
+  font-family: "Lora", serif;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 80px;
+  padding: 16px;
+  outline: none;
+}
+
 /* Notes Page Styles */
 .note-item-container {
   padding: 24px;
@@ -642,10 +658,55 @@ header {
   font-size: 12px;
 }
 
+.note-tag-container {
+  margin-bottom: 16px;
+}
+
+.note-tag-bubble {
+  padding: 4px 12px;
+  background: #efefef;
+  border-radius: 50px;
+  display: inline-block;
+  font-size: 12px;
+  margin: 0;
+}
+
 .note-item-icon {
-  width: 16px;
-  padding: 4px;
+  width: 14px;
+  padding: 12px;
   margin-right: 8px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.note-item-icon:hover {
+  opacity: 0.8;
+  background: #efefef;
+  border-radius: 10px;
+}
+
+.note-item-edit-input {
+  height: 140px;
+  width: calc(100% - 32px);
+  border: 1px solid #ccc;
+  font-family: "Lora", serif;
+  font-size: 14px;
+  padding: 16px 16px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+}
+
+.note-item-save {
+  border: none;
+  width: 100%;
+  font-family: "Heebo", sans-serif;
+  background: #222;
+  color: white;
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 16px;
+  cursor: pointer;
 }
 
 /* Footer Styles */
@@ -711,6 +772,14 @@ footer {
 .footer-copyright {
   padding-top: 24px;
   border-top: 1px solid #222;
+}
+
+.footer-copyright span {
+  margin-left: 24px;
+}
+
+.footer-copyright a {
+  color: #222
 }
 
 /* Media Query Styles */
@@ -823,7 +892,7 @@ footer {
   }
 
   .left-home-container img, .right-home-container img {
-    width: 45vw;
+    width: 47vw;
     height: 140px;
     object-fit: cover;
   }
@@ -940,5 +1009,12 @@ footer {
   .mailchimp-container {
     float: none;
     padding-bottom: 64px;
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 533px) {
+  .left-home-container img, .right-home-container img {
+    width: 45vw;
   }
 }

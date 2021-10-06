@@ -20,7 +20,6 @@ function App() {
   const [openProfileExpand, setOpenProfileExpand] = useState(false);
   const [openSignupDialog, setOpenSignupDialog] = useState(false);
 
-
   useEffect(()=>{
     dispatch(getUser())
   },[dispatch]);

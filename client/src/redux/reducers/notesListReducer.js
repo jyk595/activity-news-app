@@ -1,4 +1,4 @@
-export function notesListReducer (state = [], action) {
+export function notesListReducer (state = false, action) {
   switch (action.type) {
     case "GET_NOTES_LIST": {
       return action.payload
@@ -7,6 +7,12 @@ export function notesListReducer (state = [], action) {
       return [
         ...state,
         action.payload
+      ]
+    }
+    case "EDIT_NOTE": {
+      return [
+        action.payload,
+        ...state.filter((note)=>note.id !== action.payload.id)
       ]
     }
     case "DELETE_FROM_NOTES_LIST": {

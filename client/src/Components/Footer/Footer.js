@@ -16,7 +16,7 @@ function Footer() {
         />
       </div>
       <div className="footer-copyright">
-        <p>© 2021 - Made by John Kim</p>
+        <p>© 2021 - Made by John Kim<span><a href="https://github.com/jyk595">Github</a></span><span><a href="mailto:jyk595@gmail.com">Contact John</a></span></p>
       </div>
     </footer>
   )

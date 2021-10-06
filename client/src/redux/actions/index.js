@@ -92,6 +92,7 @@ export function getArticles(user) {
     .then(res=>res.json())
     .then(data=>{
       dispatch({ type: "GET_ARTICLE_LIST", payload: data})
+      console.log(data)
       dispatch({ type: "GET_RENDERED_ARTICLE", payload: data[0]})
     })
   }
@@ -139,6 +140,32 @@ export function markAllAsRead(user_id) {
   }
 }
 
+export function articleAsRead(article_id) {
+  return(dispatch)=>{
+    fetch(`/articles/${article_id}`,{
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        is_read: true
+      })
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      dispatch({ type:"PATCH_READ_ARTICLE_LIST", payload: data })
+    })
+    
+    // if (response.ok) {
+    //   response.json()
+    //   .then((data)=>{
+    //     article.is_read = data.is_read;
+        
+    //   })
+    // }
+  }
+}
+
 // notesList Actions
 export function getNotesList(user_id) {
   return(dispatch, getState) => {
@@ -181,14 +208,23 @@ export function filterNotesList(userId, tagName) {
     fetch(`/users/${userId}/notes`)
     .then(res=>res.json())
     .then(data=>{
-      // dispatch({ type: "GET_NOTES_LIST", payload: data})
-      // dispatch({ type:"FILTER_NOTES_LIST", payload: data})
-      console.log(data)
-      console.log(data[0].tags[0].id)
-      console.log(tagName)
       const filteredData = data.filter((article)=> `${article.tags[0].id}` === `${tagName}`)
-      console.log(filteredData)
       dispatch({ type: "GET_NOTES_LIST", payload: filteredData})
+    })
+  }
+}
+
+export function editNoteContent(noteId, editedContent) {
+  return(dispatch) => {
+    fetch(`/notes/${noteId}`,{
+      method:"PATCH",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(editedContent)
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      dispatch({ type:"EDIT_NOTE", payload: data })
+      dispatch({ type:"NOTE_UPDATE_ARTICLE", payload: data })
     })
   }
 }
@@ -199,16 +235,30 @@ export function deleteNote(noteId) {
       method: "DELETE"
     })
     dispatch({ type: "DELETE_FROM_NOTES_LIST", payload: noteId})
+    dispatch({ type: "DELETE_NOTE_FROM_ARTICLE", payload: noteId})
   }
 }
 
 // tagList Actions
 export function getTags() {
-  return(dispatch, getState)=>{
+  return(dispatch)=>{
     fetch('/tags')
     .then(res=>res.json())
     .then((data)=>{
       dispatch({ type: "GET_TAGS", payload: data})
     });
+  }
+}
+
+// Read Actions
+export function readSwitch() {
+  return(dispatch)=>{
+    dispatch({ type:"READ_SWITCH" })
+  }
+}
+
+export function readTurnTrue() {
+  return(dispatch)=>{
+    dispatch({ type:"READ_TURN_TRUE" })
   }
 }
