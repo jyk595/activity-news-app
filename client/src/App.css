@@ -566,9 +566,11 @@ header {
 
 .article-note-item {
   background: white;
-  padding: 16px 16px 4px;
+  overflow: auto;
+  padding: 16px;
   border-radius: 10px;
-  font-family: "Lora";
+  font-family: "Lora", serif;
+  margin-bottom: 8px;
 }
 
 .article-p {
@@ -632,7 +634,16 @@ header {
 }
 
 .article-note-icon-container {
-  margin-top: 8px;
+  margin-top: 0px;
+  display: inline-block;
+  float: right;
+}
+
+.article-note-text-container {
+  display: inline-block;
+  float: left;
+  width: 69%;
+  margin-right: 3%;
 }
 
 .article-note-edit-textarea {
@@ -1019,6 +1030,12 @@ footer {
   .article-h1 {
     font-size: 28px;
     line-height: 28px;
+  }
+  
+  .article-note-text-container, .article-note-icon-container {
+    width: 100%;
+    display: block;
+    float: none;
   }
 
   /* Footer Styles */

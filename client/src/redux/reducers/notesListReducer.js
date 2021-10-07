@@ -5,8 +5,8 @@ export function notesListReducer (state = false, action) {
     } 
     case "ADD_NOTES_LIST": {
       return [
-        ...state,
-        action.payload
+        action.payload,
+        ...state
       ]
     }
     case "EDIT_NOTE": {

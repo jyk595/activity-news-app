@@ -1,6 +1,9 @@
+import { useSelector } from 'react-redux';
+
 import LogoGif from '../../Images/activitynewslogo.gif';
 
 function Home({ setOpenSignupDialog}) {
+  const user = useSelector((state)=>state.user);
 
   function clickGetStarted() {
     setOpenSignupDialog(true)
@@ -11,12 +14,13 @@ function Home({ setOpenSignupDialog}) {
       <div className="left-home-container">
         <div className="home-explanation-container">
           <h2 className="home-explanation-header">Save anything on the internet.</h2>
-          <button 
+          
+          {!user && <button 
             className="home-get-started-button"
             onClick={clickGetStarted}
           >
             Get started for free
-          </button>
+          </button>}
         </div>
 
         <img 

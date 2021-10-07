@@ -19,10 +19,11 @@ function AddNoteDialog({ setOpenAddNote }){
     })
   }
 
-  async function submitNoteForm(e) {
+  function submitNoteForm(e) {
     e.preventDefault()
 
-    dispatch(addNote(renderedArticle.id, noteFormData, e.target.name.tag))
+
+    dispatch(addNote(renderedArticle.id, noteFormData, e.target.selected_tag.value))
     setOpenAddNote(false)
   }
 
@@ -67,7 +68,7 @@ function AddNoteDialog({ setOpenAddNote }){
                 return <option
                   key={tag.id}
                   tag={tag.id}
-                  value={tag.id}
+                  value={tag.name}
                 >
                   {tag.name}
                 </option>

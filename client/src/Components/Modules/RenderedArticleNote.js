@@ -35,24 +35,25 @@ function RenderedArticleNote({ note }) {
   return(
     <div
       className="article-note-item"
-    >
-      {openEditForm ? 
-        <form
-          onSubmit={submitEdit}
-        >
-          <textarea 
-            name="content"
-            value={editForm.content}
-            className="article-note-edit-textarea"
-            onChange={changeEditForm}
-          />
-          <input 
-            type="submit"
-            value="Save Content"
-            className="note-item-save"
-          />
-        </form>
-      : note.content}
+    ><div className="article-note-text-container">
+        {openEditForm ? 
+          <form
+            onSubmit={submitEdit}
+          >
+            <textarea 
+              name="content"
+              value={editForm.content}
+              className="article-note-edit-textarea"
+              onChange={changeEditForm}
+            />
+            <input 
+              type="submit"
+              value="Save Content"
+              className="note-item-save"
+            />
+          </form>
+        : note.content}
+      </div>
       <div className="article-note-icon-container">
         {!openEditForm &&
           <img 
