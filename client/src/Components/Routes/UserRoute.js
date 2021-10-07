@@ -19,7 +19,6 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
   const loading = useSelector((state)=>state.loading);
   const notesList = useSelector((state)=>state.notesList);
   const articleList = useSelector((state)=>state.articleList);
-  const tagList = useSelector((state)=>state.tagList)
 
   useEffect(()=>{
     dispatch(getInitialLists(user));
