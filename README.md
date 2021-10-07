@@ -36,6 +36,12 @@ Runs the app in the development mode.
 ### `npm test --prefix client`
 Launches the test runner in the interactive watch mode. See the section about running tests for more information. Open http://localhost:4000 to view it in the browser.
 
+## Main packages used
+1. <a href="https://nokogiri.org/" target="_blank">Nokogiri</a> for parsing web page data
+2. <a href="https://redux.js.org/" target="_blank">Redux and Thunk</a> for state management
+3. <a href="https://www.npmjs.com/package/react-mailchimp-subscribe" target="_blank">Mailchimp subscribe</a> for email collection
+4. <a href="https://github.com/bcrypt-ruby/bcrypt-ruby" target="_blank">bcrypt()</a> for user and password management
+
 ## Features
 
 1. User can sign up for an account
