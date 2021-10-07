@@ -170,11 +170,6 @@ export function addArticle(addLinkData, user) {
       dispatch({ type:"LOADING_OFF" })
     })
   }
-  // if if_loading is true, show the loading gif, otherwise do the fetch
-  // dispatch({ type:"START_LOAD" })
-  // case "START_LOAD": {
-  //     return !state
-  // }
 }
 
 export function markAllAsRead(user_id) {
