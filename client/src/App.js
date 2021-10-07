@@ -13,7 +13,7 @@ import Footer from './Components/Footer/Footer';
 import Home from './Components/Pages/Home';
 import UserRoute from './Components/Routes/UserRoute';
 import NoAccess from './Components/Modules/NoAccess';
-import { getUser } from './redux/actions/index';
+import { getUser, getTags } from './redux/actions/index';
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ function App() {
 
   useEffect(()=>{
     dispatch(getUser())
+    dispatch(getTags())
   },[dispatch]);
 
   return (
