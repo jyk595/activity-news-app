@@ -119,6 +119,7 @@ export function getInitialLists(user) {
     .then(res=>res.json())
     .then(data=>{
       dispatch({ type: "GET_ARTICLE_LIST", payload: data})
+      // dispatch({ type: "GET_RENDERED_ARTICLE", payload: data[0] })
 
       fetch('/tags')
       .then(res=>res.json())

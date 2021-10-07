@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextSelector from 'text-selection-react';
 
@@ -18,14 +18,6 @@ function RenderedArticle() {
   const articleList = useSelector((state) => state.articleList);
   const [openAddNote, setOpenAddNote] = useState(false);
   const filteredArr = articleList.filter((article)=>article.id !== renderedArticle.id)  
-    
-  useEffect(()=>{
-    fetch(`/users/${user.id}/articles`)
-    .then(res=>res.json())
-    .then(data=>{
-      dispatch(getRenderedArticle(data[0]))
-    })
-  },[articleList, dispatch])
 
   function clickDeleteButton() {
     dispatch(deleteArticle(renderedArticle.id));
