@@ -45,3 +45,9 @@ Launches the test runner in the interactive watch mode. See the section about ru
 5. User can view, edit, and delete notes
 6. User can delete articles
 7. User can sign up for a newsletter mailing list
+
+## Thanks for viewing!
+
+A project by <a href="www.johnyoung.kim" target="_blank">John Kim</a>
+
+Feel free to get in touch with me at <a href="mailto:jyk595@gmail.com">jyk595@gmail.com</a>😬
