@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextSelector from 'text-selection-react';
 
@@ -11,6 +11,7 @@ import useWindowSize from '../Hooks/useWindowSize';
 function RenderedArticle() {
   const dispatch = useDispatch();
   const size = useWindowSize();
+  const user = useSelector((state)=>state.user)
   const tagList = useSelector((state)=>state.tagList);
   const notesList = useSelector((state)=>state.notesList);
   const renderedArticle = useSelector((state)=>state.renderedArticle);
@@ -18,6 +19,14 @@ function RenderedArticle() {
   const [openAddNote, setOpenAddNote] = useState(false);
   const filteredArr = articleList.filter((article)=>article.id !== renderedArticle.id)  
     
+  useEffect(()=>{
+    fetch(`/users/${user.id}/articles`)
+    .then(res=>res.json())
+    .then(data=>{
+      dispatch(getRenderedArticle(data[0]))
+    })
+  },[articleList, dispatch])
+
   function clickDeleteButton() {
     dispatch(deleteArticle(renderedArticle.id));
     dispatch(getRenderedArticle(filteredArr[0]))
@@ -35,7 +44,7 @@ function RenderedArticle() {
 
   function clickAddNote() {
     setOpenAddNote(true)
-  } 
+  }
       
   return(
     <>

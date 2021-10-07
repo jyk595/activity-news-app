@@ -69,14 +69,6 @@ function RenderedArticleNote({ note }) {
           onClick={clickDeleteNote}
         />
       </div>
-      {/* {note.tags.map((tag)=>{
-        return 
-        <p
-          className="note-tag-bubble"
-        >
-          {tag.name}
-        </p>
-      })} */}
     </div>
   )
 }

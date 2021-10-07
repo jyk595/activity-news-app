@@ -13,7 +13,7 @@ import Footer from './Components/Footer/Footer';
 import Home from './Components/Pages/Home';
 import UserRoute from './Components/Routes/UserRoute';
 import NoAccess from './Components/Modules/NoAccess';
-import { getUser, getTags } from './redux/actions/index';
+import { getUser, setTags } from './redux/actions/index';
 
 function App() {
   const dispatch = useDispatch();
@@ -22,8 +22,13 @@ function App() {
   const [openSignupDialog, setOpenSignupDialog] = useState(false);
 
   useEffect(()=>{
-    dispatch(getUser())
-    dispatch(getTags())
+    dispatch(getUser());
+
+    fetch(`/tags`)
+    .then(res=>res.json())
+    .then(data=>{
+      dispatch(setTags(data));
+    })
   },[dispatch]);
 
   return (

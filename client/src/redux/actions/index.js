@@ -297,12 +297,18 @@ export function deleteNote(noteId) {
 }
 
 // tagList Actions
-export function getTags() {
+// export function getTags() {
+//   return(dispatch)=>{
+//     fetch('/tags')
+//     .then(res=>res.json())
+//     .then((data)=>{
+//       dispatch({ type: "GET_TAGS", payload: data})
+//     });
+//   }
+// }
+
+export function setTags(data) {
   return(dispatch)=>{
-    fetch('/tags')
-    .then(res=>res.json())
-    .then((data)=>{
-      dispatch({ type: "GET_TAGS", payload: data})
-    });
+    dispatch({ type: "GET_TAGS", payload: data})
   }
 }
