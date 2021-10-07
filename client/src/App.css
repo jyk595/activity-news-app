@@ -238,31 +238,25 @@ header {
 
 .dialog-note-form-container {
   width: 50vw;
-  height: 50vh;
   padding: 40px;
   overflow: auto;
   margin: 0 auto;
 }
 
 .dialog-section-container {
-  width: 50%;
   margin: 10vh auto;
 }
 
-.create-dialog-section-container {
-  width: 50%;
-  margin: 0 auto;
-}
-
-.edit-profile-dialog-section-container {
+.create-dialog-section-container, .edit-profile-dialog-section-container, .login-dialog-section-container {
   width: 50%;
   margin: 0 auto;
 }
 
 .dialog-header-container {
   display: block;
+  width: 50vw;
   overflow: auto;
-  margin-bottom: 24px;
+  margin: 0 auto 24px;
 }
 
 .dialog-header {
@@ -582,7 +576,7 @@ header {
   font-family: "Lora";
   letter-spacing: -0.25px;
   line-height: 20px;
-  padding-bottom: 40px;
+  padding-bottom: 64px;
 }
 
 .controls-container {
@@ -837,6 +831,10 @@ footer {
 
   /* Dialog Styles */
 
+  .dialog-header-container {
+    width: 100%
+  }
+
   .dialog-hamburger-menu-items {
     font-family: "Heebo", sans-serif;
     font-size: 40px;
@@ -870,10 +868,10 @@ footer {
 
   .dialog-x-button {
     top: 32px;
-    right: 16px;
+    right: 12px;
   }
   
-  .edit-profile-dialog-section-container, .create-dialog-section-container, .dialog-note-form-container {
+  .edit-profile-dialog-section-container, .create-dialog-section-container, .dialog-note-form-container, .login-dialog-section-container {
     width: 100%;
     margin: 10vh 0 0;
   }

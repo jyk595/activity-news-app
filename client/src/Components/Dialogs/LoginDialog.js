@@ -9,7 +9,7 @@ function LoginDialog({ openLoginDialog, setOpenLoginDialog, openSignupDialog, se
   return(
     <div className="dialog-container">
       <div className="dialog-form-container">
-        <div className="dialog-section-container">
+        <div className="login-dialog-section-container">
           <div className="dialog-header-container">
             <h2 className="dialog-header">Login to your account</h2>
             <button 

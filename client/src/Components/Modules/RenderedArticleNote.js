@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import TrashIcon from '../../Images/trash-alt-regular.svg';
 import EditIcon from '../../Images/pencil-alt-solid.svg';
@@ -7,13 +7,12 @@ import { editNoteContent, deleteNote } from '../../redux/actions';
 
 function RenderedArticleNote({ note }) {
   const dispatch = useDispatch();
-  const renderedArticle = useSelector((state)=>state.renderedArticle);
   const [openEditForm, setOpenEditForm] = useState(false);
   const [editForm, setEditForm] = useState({
     content: note.content
   })
 
-  function clickEditNote(noteId) {
+  function clickEditNote() {
     setOpenEditForm(!openEditForm)
   }
 
@@ -34,8 +33,7 @@ function RenderedArticleNote({ note }) {
   }
 
   return(
-    <p 
-      key={renderedArticle.id}
+    <div
       className="article-note-item"
     >
       {openEditForm ? 
@@ -79,7 +77,7 @@ function RenderedArticleNote({ note }) {
           {tag.name}
         </p>
       })} */}
-    </p>
+    </div>
   )
 }
 

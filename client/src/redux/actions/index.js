@@ -12,16 +12,28 @@ export function getUser() {
 }
 
 export function loginUser(loginFormData) {
-  return(dispatch)=>{
-    fetch('/login', {
+  return async(dispatch)=>{
+    const response = await fetch('/login', {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(loginFormData)
     })
-    .then(res=>res.json())
-    .then(data=>{
-      dispatch({ type: "LOGIN", payload: data })
-    })
+
+    if (response.ok) {
+      response.json()
+      .then(data=>{
+        dispatch({ type: "LOGIN", payload: data })
+        
+        fetch(`/users/${data.id}/articles`)
+        .then(res=>res.json())
+        .then(moreData=>{
+          dispatch({ type: "GET_RENDERED_ARTICLE", payload: moreData[0]})
+        })
+      })
+    } else {
+      response.json()
+      .then(data=> alert(data.errors))
+    }
   }
 }
 
@@ -51,6 +63,7 @@ export function createUser(signupFormData) {
         })
         .then(res=>res.json())
         .then(moreData=>{
+          dispatch({ type: "ADD_ARTICLE_TO_ARTICLE_LIST", payload: moreData })
           dispatch({ type: "GET_RENDERED_ARTICLE", payload: moreData})
         })
       })
@@ -209,7 +222,6 @@ export function patchSwitchRead(rendered_article, is_read_status) {
     })
     .then(res=>res.json())
     .then(data=>{
-      console.log(data)
       dispatch({ type:"READ_SWITCH" })
       dispatch({ type:"PATCH_READ_ARTICLE_LIST", payload: data })
     })

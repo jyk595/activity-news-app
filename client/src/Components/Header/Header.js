@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import ConfirmLogoutDialog from '../Dialogs/ConfirmLogoutDialog';
 import AddLinkForm from '../Forms/AddLinkForm';
@@ -8,14 +8,18 @@ import LoginDialog from '../Dialogs/LoginDialog';
 import SignupDialog from '../Dialogs/SignupDialog';
 import ProfileEditDialog from '../Dialogs/ProfileEditDialog';
 import HamburgerMenuDialog from '../Dialogs/HamburgerMenuDialog';
+import { getRenderedArticle } from '../../redux/actions';
 import LogoGif from '../../Images/activitynewslogo.gif';
 
 function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, setOpenSignupDialog }) {
+  const dispatch = useDispatch();
   const [addLinkOpen, setAddLinkOpen] = useState(false);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
   const [openHamburgerDialog, setOpenHamburgerDialog] = useState(false);
   const user = useSelector ((state) => state.user);
+  const articleList = useSelector ((state) => state.articleList);
+  const renderedArticle = useSelector ((state)=>state.renderedArticle);
 
   function toggleAddLinkOpen() {
     setAddLinkOpen(addLinkOpen=> !addLinkOpen)
@@ -39,6 +43,18 @@ function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, set
 
   function clickHamburgerMenu() {
     setOpenHamburgerDialog(!openHamburgerDialog)
+  }
+
+  function clickFeedLink() {
+    if (renderedArticle === null || renderedArticle === {}) {
+      dispatch(getRenderedArticle(articleList[0]))
+    }
+  }
+
+  function clickNotesLink() {
+    if (renderedArticle === null || renderedArticle === {}) {
+      dispatch(getRenderedArticle(articleList[0]))
+    }
   }
 
   return(
@@ -129,6 +145,7 @@ function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, set
               color: "#0000ff"
             }}
             className="nav-item"
+            onClick={clickFeedLink}
           >
             <span className="header-hover">01</span>
             Feed
@@ -139,6 +156,7 @@ function Header({ openProfileExpand, setOpenProfileExpand, openSignupDialog, set
               color: "#0000ff"
             }}
             className="nav-item"
+            onClick={clickNotesLink}
           >
             <span className="header-hover">02</span>
             Notes
