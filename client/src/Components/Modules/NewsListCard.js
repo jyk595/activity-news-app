@@ -1,17 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { getRenderedArticle } from '../../redux/actions';
 
-import { readTurnTrue, articleAsRead } from '../../redux/actions';
-
-function NewsListCard({ article, setReadState }) {
+function NewsListCard({ article }) {
   const dispatch = useDispatch();
   const { title, image_url } = article;
   const renderedArticle = useSelector((state) => state.renderedArticle);
   
   function clickArticleCard() {
     dispatch(getRenderedArticle(article));
-    dispatch(readTurnTrue());
-    // dispatch(articleAsRead(article.id))
   }
 
   return(

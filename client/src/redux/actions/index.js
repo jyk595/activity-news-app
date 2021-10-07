@@ -299,16 +299,3 @@ export function getTags() {
     });
   }
 }
-
-// Read Actions
-export function readSwitch() {
-  return(dispatch)=>{
-    dispatch({ type:"READ_SWITCH" })
-  }
-}
-
-export function readTurnTrue() {
-  return(dispatch)=>{
-    dispatch({ type:"READ_TURN_TRUE" })
-  }
-}

@@ -50,12 +50,12 @@ function AddNoteDialog({ setOpenAddNote }){
             onSubmit={submitNoteForm}
           >
             <label className="form-label">Your note</label>
-            <input 
+            <textarea 
               type="text"
               name="content"
               value={noteFormData.content}
               required
-              className="form-input"
+              className="textarea-note-add"
               onChange={onChangeNote}
             />
 

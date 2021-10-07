@@ -42,7 +42,7 @@ function App() {
         </Route>
 
         {user ?
-          <Route exact path="/:username">
+          <Route path="/:username">
             <UserRoute 
             />
           </Route>

@@ -57,7 +57,6 @@ function UserRoute({ openProfileExpand, setOpenProfileExpand }) {
           {!loading ?
           <div>
             <NewsList />
-
             <RenderedArticle />
           </div>
           :

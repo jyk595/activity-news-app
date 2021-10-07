@@ -348,6 +348,16 @@ header {
   cursor: pointer;
 }
 
+.textarea-note-add {
+  width: calc(100% - 32px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 100px;
+    font-family: "Lora",serif;
+    font-size: 14px;
+    padding: 16px;
+}
+
 /* Homepage Styles */
 
 .home-container {
@@ -925,19 +935,14 @@ footer {
   }
 
   /* Dialog Styles */
-  .dialog-form-container {
+  .dialog-form-container, .dialog-note-form-container {
     margin: 0 auto;
     padding: 0;
     height: auto;
     width: calc(100vw - 32px);
   }
 
-  .dialog-section-container {
-    margin: 10vh 0 0;
-    width: 100%;
-  }
-
-  .create-dialog-section-container {
+  .dialog-section-container, .create-dialog-section-container {
     margin: 10vh 0 0;
     width: 100%;
   }
@@ -972,6 +977,10 @@ footer {
     margin-top: 16px;
     cursor: pointer;
     z-index: 100;
+  }
+
+  .textarea-note-add {
+    
   }
 
   /* Feed Page Styles */

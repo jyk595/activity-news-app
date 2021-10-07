@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { LineChart } from 'react-chartkick';
 import 'chartkick/chart.js';
 
-import { markAllAsRead, readTurnTrue } from '../../redux/actions';
+import { markAllAsRead } from '../../redux/actions';
 
 function NewsList() {
   const dispatch = useDispatch();
@@ -12,7 +12,6 @@ function NewsList() {
   
   function clickAllAsRead() {
     dispatch(markAllAsRead(user.id));
-    dispatch(readTurnTrue())
   }
   
   return(
