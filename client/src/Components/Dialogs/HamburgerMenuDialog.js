@@ -55,6 +55,7 @@ function HamburgerMenuDialog({ setOpenHamburgerDialog, setOpenSignupDialog, setO
     dispatch(addArticle(hamburgerLinkData, user));
     setHamburgerLinkData({ url: "" });
     setExpandAddLinkHamburger(false);
+    setOpenHamburgerDialog(false);
   }
   
   return(
