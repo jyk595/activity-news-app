@@ -121,11 +121,11 @@ export function getInitialLists(user) {
       dispatch({ type: "GET_ARTICLE_LIST", payload: data})
       // dispatch({ type: "GET_RENDERED_ARTICLE", payload: data[0] })
 
-      fetch('/tags')
-      .then(res=>res.json())
-      .then((moreData)=>{
-        dispatch({ type: "GET_TAGS", payload: moreData})
-      });
+      // fetch('/tags')
+      // .then(res=>res.json())
+      // .then((tagData)=>{
+      //   dispatch({ type: "GET_TAGS", payload: tagData})
+      // });
 
       fetch(`/users/${user.id}/notes`)
       .then(res=>res.json())
@@ -298,8 +298,8 @@ export function deleteNote(noteId) {
 }
 
 // tagList Actions
-export function setTags(data) {
-  return(dispatch)=>{
-    dispatch({ type: "GET_TAGS", payload: data})
-  }
-}
+// export function setTags(data) {
+//   return(dispatch)=>{
+//     dispatch({ type: "GET_TAGS", payload: data})
+//   }
+// }

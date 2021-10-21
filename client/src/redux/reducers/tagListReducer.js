@@ -3,7 +3,8 @@ const initialTags = [
   {id: 2, name: "Politics"},
   {id: 3, name: "Entertainment"},
   {id: 4, name: "Sports"},
-  {id: 5, name: "Code"}
+  {id: 5, name: "Code"},
+  {id: 6, name: "Memes"}
 ]
 
 export function tagListReducer(state = initialTags, action) {
